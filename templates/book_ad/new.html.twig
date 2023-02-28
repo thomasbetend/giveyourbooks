@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle Annonce{% endblock %}
+
+{% block body %}
+<div class="container w-75">
+    <h1 class="mt-4">Votre annonce</h1>
+
+    {{ include('book_ad/_form.html.twig') }}
+
+    <a href="{{ path('app_home') }}">Retour aux annonces</a>
+</div>
+{% endblock %}

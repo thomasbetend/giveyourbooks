@@ -19,10 +19,9 @@
                 </div>
                 <p class="card-text">{{ bookAd.description }}</p>
                 <p class="card-text"><small>Publié par {{ bookAd.user.Pseudo|capitalize }} à {{ bookAd.place|capitalize }} le {{ bookAd.createdAt|date("m/d/Y") }}</small></p>
-                <a href="#" class="btn btn-primary">Je prends</a>
 
-                {% if app.user.id == bookAd.user.Id %}
-                    <p>supprimer</p>
+                {% if app.user.id is not null and app.user.id == bookAd.user.Id %}
+                    <a href="#" class="btn btn-danger">supprimer</a>
                 {% endif %}
                 
             </div>

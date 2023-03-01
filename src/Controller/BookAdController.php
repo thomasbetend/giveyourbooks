@@ -28,8 +28,6 @@ class BookAdController extends AbstractController
         $form = $this->createForm(BookAdType::class, $bookAd);
         $form->handleRequest($request);
 
-        //dd($this->getUser());
-
         if ($form->isSubmitted() && $form->isValid()) {
             $bookAd->setUser($this->getUser());
             $bookAdRepository->save($bookAd, true);
@@ -50,6 +48,17 @@ class BookAdController extends AbstractController
 
         return $this->render('book_ad/myspace.html.twig', [
             'bookAds' => $bookAdRepository->findByUser($userId),
+        ]);
+    }
+
+    #[Route('/aroundme', name: 'app_book_around_me', methods: ['GET', 'POST'])]
+    public function around(BookAdRepository $bookAdRepository): Response
+    {
+        $userLat = $this->getUser()->getLatitude();
+        $userLng = $this->getUser()->getLongitude();
+
+        return $this->render('book_ad/myspace.html.twig', [
+            'bookAds' => $bookAdRepository->findByDist($userLat, $userLng, 1),
         ]);
     }
 

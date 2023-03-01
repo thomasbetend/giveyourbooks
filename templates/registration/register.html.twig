@@ -3,19 +3,25 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-<div class="container w-75">
+<div class="container w-75" data-controller="address">
     <h1 class="mt-4">Inscription</h1>
 
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.email) }}
         {{ form_row(registrationForm.pseudo) }}
+        {{ form_row(registrationForm.address) }}
         {{ form_row(registrationForm.plainPassword, {
             label: 'Password'
         }) }}
         {{ form_row(registrationForm.agreeTerms) }}
 
-        <button type="submit" class="btn btn-primary">S'inscrire</button>
+        <button type="submit" class="btn btn-primary" data-action="click->address#search">S'inscrire</button>
     {{ form_end(registrationForm) }}
+    <div data-address-target="coordinates mb-4"></div>
+
+    <a href="{{ path('app_login') }}" class="mt-4">Déjà inscrit ? Connectez-vous</a>
+
 </div>
+
     
 {% endblock %}

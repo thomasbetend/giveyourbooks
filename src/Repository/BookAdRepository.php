@@ -16,6 +16,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class BookAdRepository extends ServiceEntityRepository
 {
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, BookAd::class);
@@ -53,6 +54,19 @@ class BookAdRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    // function to find book ads in the distance $dist from point $lat & $lng
+
+    public function findByDist($lat, $lng, $dist): array
+    {
+        $sql = 'SELECT * FROM book_ad b JOIN user u ON user.id = b.user_id WHERE (u.longitude - ' . $lng . ')*111*cos(' . $lat .') * (u.longitude - ' . $lng . ')*111*cos(' . $lat .') + (u.latitude-' . $lat .')*111 * (u.latitude-' . $lat .')*111 < ' . $dist * $dist;
+        
+        $conn = $this->getEntityManager()->getConnection();
+        $stmt = $conn->prepare($sql);
+        $result = $stmt->executeQuery([]);
+
+        return $result->fetchAllAssociative();
     }
 
 //    public function findOneBySomeField($value): ?BookAd

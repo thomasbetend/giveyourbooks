@@ -22,4 +22,14 @@ class HomeController extends AbstractController
         ]);
     }
 
+    #[Route('/{lat}/{lng}', name: 'app_book_search_by_coord', methods: ['GET', 'POST'])]
+    public function searchByCoord(float $lat, float $lng, BookAdRepository $bookAdRepository): Response
+    {
+        $bookAdsAround = $bookAdRepository->findByCoord($lat, $lng);
+
+        return $this->render('book_ad/myspace.html.twig', [
+            'bookAds' => $bookAdsAround,
+        ]);
+    }
+
 }

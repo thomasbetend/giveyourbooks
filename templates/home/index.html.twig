@@ -8,6 +8,13 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
+<div class="form-inline" data-controller="search">
+    <label for="address"></label>
+    <input type="search" id="address" name="address" data-search-target="input" class="form-control" placeholder="cherchez autour de vous">
+    <button type="submit" data-action="click->search#search" class="btn btn-primary">chercher</button>
+    <div data-search-target="coordinates"></div>
+</div>
+
 <div class="container w-75 d-flex flex-row flex-wrap">
     {% for bookAd in bookAds %}
         <div class="card mt-4 mx-4 card-width">
@@ -18,8 +25,11 @@
                     <p class="card-text small-text px-2">{{ bookAd.category }}</p>
                 </div>
                 <p class="card-text">{{ bookAd.description }}</p>
-                <p class="card-text"><small>Publié par {{ bookAd.user.Pseudo|capitalize }} à {{ bookAd.place|capitalize }} le {{ bookAd.createdAt|date("m/d/Y") }}</small></p>
-                <a href="#" class="btn btn-primary">Je prends</a>
+                <p class="card-text"><small>Publié par {{ bookAd.user.pseudo|capitalize }} à {{ bookAd.place|capitalize }} le {{ bookAd.createdAt|date("m/d/Y") }}</small></p>
+                
+                {% if is_granted('ROLE_USER') and app.user.id != bookAd.user.id %}
+                    <a href="#" class="btn btn-primary">Je prends</a>
+                {% endif %}
             </div>
         </div>
     {% endfor %}

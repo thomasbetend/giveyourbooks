@@ -4,10 +4,19 @@
 
 {% block body %}
 <div class="container w-75">
-    <h1 class="mt-4">Votre annonce</h1>
+    {% if app.user %}
+        <h1 class="mt-4">Votre livre à donner</h1>
 
-    {{ include('book_ad/_form.html.twig') }}
+        {{ include('book_ad/_form.html.twig') }}
 
-    <a href="{{ path('app_home') }}">Retour aux annonces</a>
+        <a href="{{ path('app_home') }}">Retour aux annonces</a>
+
+    {% else %}
+        
+        <h3 class="mt-4">Vous devez être connectés pour donner un livre</h3>
+        
+    {% endif %}
+    
+
 </div>
 {% endblock %}

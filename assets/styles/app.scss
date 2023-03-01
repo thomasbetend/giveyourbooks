@@ -8,3 +8,20 @@ body {
     display: flex !important;
     justify-content: space-between !important;
 }
+
+.card-background-image {
+    height: 280px;
+}
+
+.card-width {
+    width: 400px;
+}
+
+.small-text {
+    font-size: 0.6rem;
+    color: white;
+    background-color: black;
+    border-radius: 5px;
+    height: 15px;
+}
+

@@ -15,17 +15,21 @@ class BookAdFixtures extends Fixture implements DependentFixtureInterface
         $bookAd1 = new BookAd();
         $bookAd1->setTitle('Livre Le Guépard');
         $bookAd1->setPlace('versailles');
+        $bookAd1->setCategory($this->getReference(CategoryFixtures::CATEGORY_POCHE));
         $bookAd1->setBook($this->getReference(BookFixtures::BOOK_1));
         $bookAd1->setDescription('Donne livre en parfait état. L\'intrigue est magnifique');
-        $bookAd1->addImage($this->getReference(BookAdImageFixtures::BOOK_AD_IMAGE_1));
+        $bookAd1->setImagePath('le-guepard-1.jpeg');
+        $bookAd1->setUser($this->getReference(UserFixtures::USER_1));
         $manager->persist($bookAd1);
 
         $bookAd2 = new BookAd();
         $bookAd2->setTitle('Donne les misérables');
         $bookAd2->setPlace('taverny');
+        $bookAd2->setCategory($this->getReference(CategoryFixtures::CATEGORY_POCHE));
         $bookAd2->setBook($this->getReference(BookFixtures::BOOK_2));
         $bookAd2->setDescription('Livre qui a un vécu, une histoire');
-        $bookAd2->addImage($this->getReference(BookAdImageFixtures::BOOK_AD_IMAGE_2));
+        $bookAd2->setImagePath('les-miserables-1.jpeg');
+        $bookAd2->setUser($this->getReference(UserFixtures::USER_2));
         $manager->persist($bookAd2);
 
         $manager->flush();
@@ -36,6 +40,8 @@ class BookAdFixtures extends Fixture implements DependentFixtureInterface
         return [
             BookAdImageFixtures::class,
             BookFixtures::class,
+            CategoryFixtures::class,
+            UserFixtures::class,
         ];
     }
 }

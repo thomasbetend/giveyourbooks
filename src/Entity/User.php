@@ -6,6 +6,7 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -15,6 +16,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    use TimestampableEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -38,9 +41,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Book::class)]
     private Collection $books;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: BookAd::class)]
+    private Collection $bookAds;
+
     public function __construct()
     {
         $this->books = new ArrayCollection();
+        $this->bookAds = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -158,6 +165,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString()
     {
         return $this->getPseudo();
+    }
+
+    /**
+     * @return Collection<int, BookAd>
+     */
+    public function getBookAds(): Collection
+    {
+        return $this->bookAds;
+    }
+
+    public function addBookAd(BookAd $bookAd): self
+    {
+        if (!$this->bookAds->contains($bookAd)) {
+            $this->bookAds->add($bookAd);
+            $bookAd->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBookAd(BookAd $bookAd): self
+    {
+        if ($this->bookAds->removeElement($bookAd)) {
+            // set the owning side to null (unless already changed)
+            if ($bookAd->getUser() === $this) {
+                $bookAd->setUser(null);
+            }
+        }
+
+        return $this;
     }
 
 }

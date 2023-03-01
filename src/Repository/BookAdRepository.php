@@ -39,20 +39,21 @@ class BookAdRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return BookAd[] Returns an array of BookAd objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('b.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+        * @return BookAd[] Returns an array of BookAd objects
+        */
+    public function findByUser($userId): array
+    {
+        return $this->createQueryBuilder('b')
+            ->leftJoin('b.user', 'user')
+            ->andWhere('user.id = :val')
+            ->setParameter('val', $userId)
+            ->orderBy('b.updatedAt', 'DESC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
 //    public function findOneBySomeField($value): ?BookAd
 //    {

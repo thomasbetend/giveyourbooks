@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/annonce')]
+#[Route('/dons')]
 class BookAdController extends AbstractController
 {
     #[Route('/', name: 'app_book_ad_index', methods: ['GET'])]
@@ -21,22 +21,35 @@ class BookAdController extends AbstractController
         ]);
     }
 
-    #[Route('/nouvelle', name: 'app_book_ad_new', methods: ['GET', 'POST'])]
+    #[Route('/publier', name: 'app_book_ad_new', methods: ['GET', 'POST'])]
     public function new(Request $request, BookAdRepository $bookAdRepository): Response
     {
         $bookAd = new BookAd();
         $form = $this->createForm(BookAdType::class, $bookAd);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $bookAdRepository->save($bookAd, true);
+        //dd($this->getUser());
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $bookAd->setUser($this->getUser());
+            $bookAdRepository->save($bookAd, true);
+            
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('book_ad/new.html.twig', [
             'book_ad' => $bookAd,
             'form' => $form,
+        ]);
+    }
+
+    #[Route('/monespace', name: 'app_book_ad_mine', methods: ['GET', 'POST'])]
+    public function myspace(BookAdRepository $bookAdRepository): Response
+    {
+        $userId = $this->getUser()->getId();
+
+        return $this->render('book_ad/myspace.html.twig', [
+            'bookAds' => $bookAdRepository->findByUser($userId),
         ]);
     }
 

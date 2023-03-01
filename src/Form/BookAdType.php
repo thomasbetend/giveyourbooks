@@ -4,9 +4,11 @@ namespace App\Form;
 
 use App\Entity\BookAd;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class BookAdType extends AbstractType
 {
@@ -14,7 +16,7 @@ class BookAdType extends AbstractType
     {
         $builder
             ->add('title', null, [
-                'label' => 'Titre de l\'annonce',
+                'label' => 'Titre',
             ])
             ->add('description', null, [
                 'label' => 'Description',
@@ -22,9 +24,10 @@ class BookAdType extends AbstractType
             ->add('place', null, [
                 'label' => 'Où ?',
             ])
-            ->add('book' , null, [
-                'label' => 'Votre livre',
+            ->add('category', null, [
+                'label' => 'Catégorie',
             ])
+            ->add('imageFile', VichImageType::class)
         ;
     }
 

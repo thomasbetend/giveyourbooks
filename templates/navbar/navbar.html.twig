@@ -1,6 +1,6 @@
 {% block head %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-flex justify-content-between px-4">
-    <a class="navbar-brand" href="#">Give Your Books</a>
+    <a class="navbar-brand" href="{{ path('app_home') }}">Give Your Books</a>
     <div class="d-flex justify-content-end">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -14,21 +14,17 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_logout')}}">Déconnexion</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_book_ad_mine')}}">Mes dons</a>
+                    </li>
                     {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_login')}}">Connexion</a>
                     </li>
                 {% endif %}
-
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_book_ad_new')}}">Publier une annonce</a>
+                        <a class="nav-link" href="{{ path('app_book_ad_new')}}">Donner un livre</a>
                     </li>
-                {# <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
-                </li> #}
             </ul>
         </div>
     </div>

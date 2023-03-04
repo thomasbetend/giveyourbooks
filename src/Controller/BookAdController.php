@@ -9,7 +9,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted('ROLE_USER')]
 #[Route('/dons')]
 class BookAdController extends AbstractController
 {
@@ -57,8 +59,12 @@ class BookAdController extends AbstractController
         $userLat = $this->getUser()->getLatitude();
         $userLng = $this->getUser()->getLongitude();
 
-        return $this->render('book_ad/myspace.html.twig', [
-            'bookAds' => $bookAdRepository->findByDist($userLat, $userLng, 1),
+        $bookAds = $bookAdRepository->findByDist($userLat, $userLng, 1);
+
+        //dd($bookAds);
+
+        return $this->render('book_ad/aroundme.html.twig', [
+            'bookAds' => $bookAds,
         ]);
     }
 

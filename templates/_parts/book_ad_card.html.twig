@@ -1,0 +1,15 @@
+<div class="card mt-4 mx-4 card-width">
+    <img class="card-img-top card-background-image" src="{{ asset('images/' ~ bookAd.imagePath) | imagine_filter('list_thumbnail') }}" alt="Card image cap">
+    <div class="card-body">
+        <div class="title-category-box d-flex justify-content-between">
+            <h5 class="card-title">{{ bookAd.title}}</h5>
+            <p class="card-text small-text px-2">{{ bookAd.category }}</p>
+        </div>
+        <p class="card-text">{{ bookAd.description }}</p>
+        <p class="card-text"><small>Publié par {{ bookAd.user }} à {{bookAd.user.city}} le {{ bookAd.createdAt|date("m/d/Y") }}</small></p>
+        
+        {% if is_granted('ROLE_USER') and app.user.id != bookAd.user.id %}
+            <a href="#" class="btn btn-primary">Je prends</a>
+        {% endif %}
+    </div>
+</div>

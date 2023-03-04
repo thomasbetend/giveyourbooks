@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon espace{% endblock %}
+
+{% block body %}
+<div class="container w-75 d-flex flex-row flex-wrap">
+    {% for bookAd in pagination %}
+        {% include "./_parts/book_ad_card.html.twig" %}
+    {% endfor %}
+</div>
+{% endblock %}

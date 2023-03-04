@@ -3,7 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\BookAd;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Query\QueryBuilder;
+use Doctrine\ORM\QueryBuilder as ORMQueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -60,13 +63,28 @@ class BookAdRepository extends ServiceEntityRepository
 
     public function findByDist($lat, $lng, $dist): array
     {
-        $sql = 'SELECT * FROM book_ad b JOIN user u ON user.id = b.user_id WHERE (u.longitude - ' . $lng . ')*111*cos(' . $lat .') * (u.longitude - ' . $lng . ')*111*cos(' . $lat .') + (u.latitude-' . $lat .')*111 * (u.latitude-' . $lat .')*111 < ' . $dist * $dist;
+        $sql = 'SELECT * FROM book_ad b LEFT JOIN user u ON u.id = b.user_id WHERE (u.longitude - ' . $lng . ')*111*cos(' . $lat .') * (u.longitude - ' . $lng . ')*111*cos(' . $lat .') + (u.latitude-' . $lat .')*111 * (u.latitude-' . $lat .')*111 < ' . $dist * $dist;
         
         $conn = $this->getEntityManager()->getConnection();
         $stmt = $conn->prepare($sql);
         $result = $stmt->executeQuery([]);
 
         return $result->fetchAllAssociative();
+    }
+
+    public function findRecent(): array
+    {
+        return $this->findBy([], [
+            'createdAt' => 'DESC',
+        ]);
+    }
+
+    public function getUserBookAdsQueryBuilder(User $user): ORMQueryBuilder
+    {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.user = :user')
+            ->setParameter('user', $user);
+
     }
 
 //    public function findOneBySomeField($value): ?BookAd

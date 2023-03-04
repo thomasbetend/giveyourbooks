@@ -28,7 +28,7 @@ class BookAd
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $place = null;
 
     #[ORM\ManyToOne(inversedBy: 'bookAds')]

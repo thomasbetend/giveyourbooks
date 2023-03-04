@@ -13,11 +13,11 @@
         {{ form_row(registrationForm.plainPassword, {
             label: 'Password'
         }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
 
-        <button type="submit" class="btn btn-primary" data-action="click->address#search">S'inscrire</button>
+        <button type="submit" class="btn btn-primary">S'inscrire</button>
     {{ form_end(registrationForm) }}
-    <div data-address-target="coordinates mb-4"></div>
+    
+    <div data-address-target="coordinates" class="mb-4"></div>
 
     <a href="{{ path('app_login') }}" class="mt-4">Déjà inscrit ? Connectez-vous</a>
 

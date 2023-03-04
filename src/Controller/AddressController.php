@@ -14,8 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AddressController extends AbstractController
 {
-    #[Route('/address/register/{lat}/{lng}', name: 'app_address')]
-    public function register($lat, $lng, UserRepository $userRepository, EntityManagerInterface $em): JsonResponse
+    #[Route('/address/register/{lat}/{lng}/{city}', name: 'app_address_register')]
+    public function register(float $lat, float $lng, string $city, UserRepository $userRepository, EntityManagerInterface $em): JsonResponse
     {
         $userId = $this->getUser()->getId();
 
@@ -25,6 +25,7 @@ class AddressController extends AbstractController
         if (isset($user)) {
             $user->setLatitude($lat);
             $user->setLongitude($lng);
+            $user->setCity($city);
             $em->persist($user);
 
             $em->flush();
@@ -33,6 +34,16 @@ class AddressController extends AbstractController
         return new JsonResponse([
             'latitude' => $lat,
             'longitude' => $lng,
+        ]);
+    }
+
+    #[Route('/address', name: 'app_address')]
+    public function address(): Response
+    {
+        $userId = $this->getUser()->getId();
+
+        return $this->render('address/index.html.twig', [
+            'user_id' => $userId,
         ]);
     }
 }

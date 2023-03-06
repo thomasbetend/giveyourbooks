@@ -90,21 +90,38 @@ class BookAdRepository extends ServiceEntityRepository
     public function geocodeQueryBuilder(
         float $latitude,
         float $longitude,
-    )
+        int $userId,
+    ): ORMQueryBuilder
     {
-        // $sql = 'SELECT (6353 * 2 * ASIN(SQRT( POWER(SIN((u.latitude - ' . $latitude . ') *  pi()/180 / 2), 2) +COS(u.latitude * pi()/180) * COS(' . $latitude . ' * pi()/180) * POWER(SIN((u.longitude - ' . $longitude . ') * pi()/180 / 2), 2) ))) AS distance FROM book_ad b LEFT JOIN user u ON u.id = b.user_id ORDER BY distance ASC';
-        
-        // $conn = $this->getEntityManager()->getConnection();
-        // $stmt = $conn->prepare($sql);
-        // $result = $stmt->executeQuery([]);
-
-        // return $result->fetchAllAssociative();
-
         return $this->createQueryBuilder('b')
-            ->addSelect("(6353 * 2 * ASIN(SQRT( POWER(SIN((b.latitude - :lat) *  pi()/180 / 2), 2) +COS(b.latitude * pi()/180) * COS(:lat * pi()/180) * POWER(SIN((b.longitude - :lng) * pi()/180 / 2), 2) ))) AS distance")
-            ->setParameter("lat", $latitude)
-            ->setParameter("lng", $longitude)
-            ->addOrderBy("distance", "ASC");
+            ->leftJoin('b.user', 'user')
+            ->addSelect('(6353 * 2 * ASIN(SQRT( POWER(SIN((user.latitude - :lat) *  pi()/180 / 2), 2) +COS(user.latitude * pi()/180) * COS(:lat * pi()/180) * POWER(SIN((user.longitude - :lng) * pi()/180 / 2), 2) ))) AS distance')
+            ->setParameter('lat', $latitude)
+            ->setParameter('lng', $longitude)
+            ->andWhere('user.id != :userId')
+            ->setParameter('userId', $userId)
+            ->addOrderBy("distance", 'ASC');
+    }
+
+    public function searchQueryBuilder(
+        float $latitude,
+        float $longitude,
+        string $q,
+        int $userId,
+    ): ORMQueryBuilder
+    {
+        {
+            return $this->createQueryBuilder('b')
+                ->leftJoin('b.user', 'user')
+                ->addSelect('(6353 * 2 * ASIN(SQRT( POWER(SIN((user.latitude - :lat) *  pi()/180 / 2), 2) +COS(user.latitude * pi()/180) * COS(:lat * pi()/180) * POWER(SIN((user.longitude - :lng) * pi()/180 / 2), 2) ))) AS distance')
+                ->setParameter('lat', $latitude)
+                ->setParameter('lng', $longitude)
+                ->andWhere('user.id != :userId')
+                ->andWhere('b.title LIKE :q OR b.description LIKE :q')
+                ->setParameter('q', '%' . $q . '%')
+                ->setParameter('userId', $userId)
+                ->addOrderBy("distance", 'ASC');
+        }
     }
 
 //    public function findOneBySomeField($value): ?BookAd

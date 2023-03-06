@@ -32,8 +32,6 @@ class BookAdController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $bookAd->setUser($this->getUser());
-            $bookAd->setLatitude($this->getUser()->getLatitude());
-            $bookAd->setLongitude($this->getUser()->getLongitude());
             $bookAdRepository->save($bookAd, true);
             
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);

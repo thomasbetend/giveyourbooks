@@ -1,4 +1,7 @@
+@import "variables";
+
 @import "~bootstrap/scss/bootstrap";
+
 
 body {
     background-color: rgb(255, 255, 255);
@@ -7,6 +10,25 @@ body {
 .navbar-flex {
     display: flex !important;
     justify-content: space-between !important;
+}
+
+.nav-list-dropdown {
+    margin-left: 25px !important;
+}
+
+.button-search {
+    height: 38px;
+    margin-right: 25px;
+}
+
+.query-search {
+    margin-bottom: 0px !important;
+}
+
+.italic-dropdown {
+    text-decoration: italic !important;
+    font-size: 0.6rem !important;
+    color: rgb(103, 103, 103) !important;
 }
 
 .card-width {
@@ -19,5 +41,9 @@ body {
     background-color: black;
     border-radius: 5px;
     height: 15px;
+}
+
+h1 {
+    color: $primary;
 }
 

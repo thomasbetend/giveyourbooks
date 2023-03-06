@@ -4,7 +4,7 @@
 
 {% block body %}
 
-<h1 class="mt-4 text-center">Autour de moi</h1>
+<h1 class="mt-4 text-center">{{ pagination.getTotalItemCount }} résultats</h1>
 <div class="navigation d-flex justify-content-center">
     {{ knp_pagination_render(pagination) }}
 </div>
@@ -15,7 +15,6 @@
                 {{ parent() }}
                 {% if is_granted('ROLE_USER') and app.user.id != bookAd.user.id %}
                     <a href="#" class="btn btn-primary">Je prends</a>
-                    <i class="fa-solid fa-location-dot"></i>
                     <span>{{ result.distance | number_format }} km</span>
                 {% endif %}
             {% endblock %}

@@ -4,12 +4,6 @@
 
 {% block body %}
 
-<div action="" class="form-inline" data-controller="search">
-    <label for="address"></label>
-    <input type="search" id="address" name="address" data-search-target="input" class="form-control" placeholder="cherchez autour de vous">
-    <button type="submit" data-action="click->search#search" class="btn btn-primary">Autour de vous</button>
-    <div data-search-target="coordinates"></div>
-</div>
 <div class="container w-75 d-flex flex-row flex-wrap">
     {% for bookAd in bookAds %}
         {% embed "./_parts/book_ad_card.html.twig" %}

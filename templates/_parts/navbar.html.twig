@@ -2,40 +2,38 @@
 {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
 {% endblock %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark d-flex justify-content-between px-4">
+<nav class="navbar navbar-expand-lg navbar-dark bg-secondary d-flex justify-content-between px-4">
     <a class="navbar-brand" href="{{ path('app_home') }}">Give Your Books</a>
     <div class="d-flex justify-content-end">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                {% if app.user %}
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Bienvenue {{ app.user }}</a>
-                    </li>
-                {% endif %}
-                    <li class="nav-item">
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Mon compte
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            {% if app.user %}
-                                <a class="dropdown-item" href="{{ path('app_my_book_new')}}">Donner un livre</a>
-                                <a class="dropdown-item" href="{{ path('app_my_book_ad')}}">Mes dons</a>
-                                <a class="dropdown-item" href="{{ path('app_logout')}}">Déconnexion</a>
-                                {% else %}
-                                <a class="dropdown-item" href="{{ path('app_login')}}">Connexion</a>
-                            {% endif %}
-                        </div>
-                    </li>
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                    </form>
-            </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+            </li>
+            {% if app.user %}
+            {{ render(controller(
+                'App\\Controller\\SearchController::searchBar',
+                { mySearch: app.request.get('my_search') }
+            )) }}
+            {% endif %}
+            <li class="nav-item dropdown nav-list-dropdown mr-4 mt-3">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Mon compte
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    {% if app.user %}
+                        <a class="dropdown-item italic-dropdown" href="{{ path('app_my_book_new')}}">{{ app.user|capitalize }} de {{ app.user.city|capitalize }}</a>
+                        <a class="dropdown-item" href="{{ path('app_my_book_new')}}">Donner un livre</a>
+                        <a class="dropdown-item" href="{{ path('app_my_book_ad')}}">Mes dons</a>
+                        <a class="dropdown-item" href="{{ path('app_logout')}}">Déconnexion</a>
+                        {% else %}
+                        <a class="dropdown-item" href="{{ path('app_login')}}">Connexion</a>
+                    {% endif %}
+                </div>
+            </li>
+        </ul>
         </div>
     </div>
 </nav>

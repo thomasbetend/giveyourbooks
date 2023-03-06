@@ -19,11 +19,12 @@ class HomeController extends AbstractController
         ): Response
     {
             if($this->getUser()) {
+                $userId = $this->getUser()->getId();
                 $latitude = $this->getUser()->getLatitude();
                 $longitude = $this->getUser()->getLongitude();
     
                 $pagination = $paginator->paginate(
-                    $bookAdRepository->geocodeQueryBuilder($latitude, $longitude),
+                    $bookAdRepository->geocodeQueryBuilder($latitude, $longitude, $userId),
                     $request->query->getInt('page', 1),
                     limit: 10
                 );

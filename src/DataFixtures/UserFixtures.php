@@ -30,8 +30,6 @@ class UserFixtures extends Fixture
         $admin->setPassword($hashedPassword);
         $admin->setRoles(['ROLE_ADMIN']);
         $admin->setAddress('195 rue des pyrénées 75020 paris');
-        $admin->setLatitude(48.861472);
-        $admin->setLongitude(2.400091);
         $admin->setCity('paris');
         $this->addReference(self::USER_1, $admin);
         $manager->persist($admin);
@@ -45,9 +43,6 @@ class UserFixtures extends Fixture
         );
         $thomas->setPassword($hashedPassword2);
         $thomas->setAddress('6 rue de la Croix-Blanche 78870 bailly');
-        $thomas->setLatitude(48.842961);
-        $thomas->setLongitude(2.075309);
-        $thomas->setCity('bailly');
         $this->addReference(self::USER_2, $thomas);
         $manager->persist($thomas);
 
@@ -60,9 +55,6 @@ class UserFixtures extends Fixture
         );
         $simone->setPassword($hashedPassword3);
         $simone->setAddress('noisy-le-roi');
-        $simone->setLatitude(48.842961);
-        $simone->setLongitude(2.075309);
-        $simone->setCity('noisy-le-roi');
         $this->addReference(self::USER_3, $simone);
         $manager->persist($simone);
 
@@ -75,9 +67,6 @@ class UserFixtures extends Fixture
         );
         $gina->setPassword($hashedPassword4);
         $gina->setAddress('Parc de l\'Etoile 67100 Strasbourg');
-        $gina->setLatitude(48.573419);
-        $gina->setLongitude(7.75297);
-        $gina->setCity('Strasbourg');
         $this->addReference(self::USER_4, $gina);
         $manager->persist($gina);
 

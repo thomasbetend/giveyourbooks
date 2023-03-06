@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+
+<h1 class="mt-4 text-center">Autour de moi</h1>
+<div class="navigation d-flex justify-content-center">
+    {{ knp_pagination_render(pagination) }}
+</div>
+<div class="container w-75 d-flex flex-row flex-wrap">
+    {% for result in pagination %}
+        {% embed "./_parts/book_ad_card.html.twig" with { bookAd: result[0] } %}
+            {% block actions %}
+                {{ parent() }}
+                {% if is_granted('ROLE_USER') and app.user.id != bookAd.user.id %}
+                    <a href="#" class="btn btn-primary">Je prends</a>
+                    <span>{{ result.distance | number_format }} km</span>
+                {% endif %}
+            {% endblock %}
+        {% endembed %}    
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -32,6 +32,8 @@ class MyBookAdController extends AbstractController
             limit: 10
         );
 
+        //dd($bookAdRepository->getUserBookAdsQueryBuilder($user));
+
         return $this->render('my_book_ad/index.html.twig', [
             'pagination' => $pagination,
         ]);

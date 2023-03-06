@@ -18,6 +18,8 @@ class BookAdFixtures extends Fixture implements DependentFixtureInterface
         $bookAd1->setBook($this->getReference(BookFixtures::BOOK_1));
         $bookAd1->setDescription('Donne livre en parfait état. L\'intrigue est magnifique');
         $bookAd1->setImagePath('le-guepard-1.jpeg');
+        $bookAd1->setLatitude($this->getReference(UserFixtures::USER_1)->getLatitude());
+        $bookAd1->setLongitude($this->getReference(UserFixtures::USER_1)->getLongitude());
         $bookAd1->setUser($this->getReference(UserFixtures::USER_1));
         $manager->persist($bookAd1);
 
@@ -27,6 +29,8 @@ class BookAdFixtures extends Fixture implements DependentFixtureInterface
         $bookAd2->setBook($this->getReference(BookFixtures::BOOK_2));
         $bookAd2->setDescription('Livre qui a un vécu, une histoire');
         $bookAd2->setImagePath('les-miserables-1.jpeg');
+        $bookAd2->setLatitude($this->getReference(UserFixtures::USER_2)->getLatitude());
+        $bookAd2->setLongitude($this->getReference(UserFixtures::USER_2)->getLongitude());
         $bookAd2->setUser($this->getReference(UserFixtures::USER_2));
         $manager->persist($bookAd2);
 
@@ -37,6 +41,8 @@ class BookAdFixtures extends Fixture implements DependentFixtureInterface
             $bookAd->setBook($this->getReference(BookFixtures::BOOK_2));
             $bookAd->setDescription('Magnifique bouquin qui a déclenché un véritable tollé');
             $bookAd->setImagePath('les-miserables-1.jpeg');
+            $bookAd->setLatitude($this->getReference(UserFixtures::USER_4)->getLatitude());
+            $bookAd->setLongitude($this->getReference(UserFixtures::USER_4)->getLongitude());
             $bookAd->setUser($this->getReference(UserFixtures::USER_4));
             $manager->persist($bookAd);
         }

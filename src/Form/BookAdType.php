@@ -22,10 +22,6 @@ class BookAdType extends AbstractType
             ->add('description', null, [
                 'label' => 'Description',
             ])
-            // ->add('place', null, [
-            //     'label' => 'Où ?',
-            //     'attr' => ['data-address-target' => 'input'],
-            // ])
             ->add('category', null, [
                 'label' => 'Catégorie',
             ])

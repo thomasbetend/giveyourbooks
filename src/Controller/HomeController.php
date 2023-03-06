@@ -14,7 +14,7 @@ class HomeController extends AbstractController
     public function index(BookAdRepository $bookAdRepository): Response
     {
             return $this->render('home/index.html.twig', [
-                'bookAds' => $bookAdRepository->findRecent(),
+                'bookAds' => $bookAdRepository->findRecent(5),
             ]);
         
     }

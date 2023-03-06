@@ -5,9 +5,9 @@
 {% block body %}
     <h1>Edit BookAd</h1>
 
-    {{ include('book_ad/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('my_book_ad/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('app_book_ad_index') }}">back to list</a>
 
-    {{ include('book_ad/_delete_form.html.twig') }}
+    {{ include('my_book_ad/_delete_form.html.twig') }}
 {% endblock %}

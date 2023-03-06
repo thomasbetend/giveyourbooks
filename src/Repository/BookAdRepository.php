@@ -72,11 +72,11 @@ class BookAdRepository extends ServiceEntityRepository
         return $result->fetchAllAssociative();
     }
 
-    public function findRecent(): array
+    public function findRecent(int $limit): array
     {
         return $this->findBy([], [
             'createdAt' => 'DESC',
-        ]);
+        ], $limit);
     }
 
     public function getUserBookAdsQueryBuilder(User $user): ORMQueryBuilder

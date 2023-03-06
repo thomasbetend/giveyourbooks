@@ -12,7 +12,14 @@
 </div>
 <div class="container w-75 d-flex flex-row flex-wrap">
     {% for bookAd in bookAds %}
-        {% include "./_parts/book_ad_card.html.twig" %}
+        {% embed "./_parts/book_ad_card.html.twig" %}
+            {% block actions %}
+                {{ parent() }}
+                {% if is_granted('ROLE_USER') and app.user.id != bookAd.user.id %}
+                    <a href="#" class="btn btn-primary">Je prends</a>
+                {% endif %}
+            {% endblock %}
+        {% endembed %}    
     {% endfor %}
 </div>
 

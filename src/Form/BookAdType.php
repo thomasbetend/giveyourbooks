@@ -25,7 +25,10 @@ class BookAdType extends AbstractType
             ->add('category', null, [
                 'label' => 'Catégorie',
             ])
-            ->add('imageFile', VichImageType::class)
+            ->add('imageFile', VichImageType::class, [
+                'label' => 'Image'
+            ]
+            )
         ;
     }
 

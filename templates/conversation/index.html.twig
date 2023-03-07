@@ -9,10 +9,11 @@
     <h1 class="mt-4">Conversations</h1>
     {% for conversation in pagination %}
         {# <h2>{{ conversation.name}}</h2> #}
+        <h6>Annonce : {{ conversation.bookAd }}</h6>
         {% for user in conversation.user %}
             {% if user != app.user %}
                 <a href="{{ path('app_my_conversation', {id: conversation.id}) }}">
-                    <div class="card col-12 bg-primary text-white">{{ user.pseudo|capitalize }}</div>
+                    <div class="card col-12 bg-primary text-white">{{ user.pseudo|capitalize }} à {{ user.city|capitalize }}</div>
                 </a>
             {% endif %}
         {% endfor %}

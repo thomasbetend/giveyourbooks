@@ -6,10 +6,25 @@
 
 
 <div class="container w-75">
-    <h1 class="mt-4">Conversations</h1>
     {% for conversation in pagination %}
+        <h1 class="mt-4">Conversation avec 
+            {% for user in conversation.user %}
+                {% if user != app.user %}
+                    {{ user.pseudo|capitalize }}
+                {% endif %}
+            {% endfor %}
+        </h1>
         {% for message in conversation.messages %}
-            <p>{{ message.content}}</p>
+                {% if message.user != app.user %}
+                <div class="d-flex">
+                    <div class="card text-right col-6 p-2 m-1 message-left">{{ message.content}}</div>
+                </div>
+                {% else %}
+                <div class="d-flex flex-row-reverse">
+                    <div class="card text-left bg-secondary col-6 p-2 m-1 message-right text-white">{{ message.content}}</div>
+                </div>
+                {% endif %}
+            
         {% endfor %}
     {% endfor %}
 </div>

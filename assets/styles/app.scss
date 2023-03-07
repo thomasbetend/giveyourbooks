@@ -71,3 +71,11 @@ h1 {
 .distance {
     font-size: 0.8rem;
 }
+
+.message-left {
+    border-radius: 10px 10px 10px 0px !important;
+}
+
+.message-right {
+    border-radius: 10px 10px 0px 10px !important;
+}

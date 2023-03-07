@@ -24,6 +24,9 @@ class Conversation
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $name = null;
 
+    #[ORM\ManyToOne(inversedBy: 'conversations')]
+    private ?BookAd $bookAd = null;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
@@ -97,6 +100,18 @@ class Conversation
     public function setName(?string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getBookAd(): ?BookAd
+    {
+        return $this->bookAd;
+    }
+
+    public function setBookAd(?BookAd $bookAd): self
+    {
+        $this->bookAd = $bookAd;
 
         return $this;
     }

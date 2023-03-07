@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ConversationController!{% endblock %}
+
+{% block body %}
+
+
+<div class="container w-75">
+    <h1 class="mt-4">Conversations</h1>
+    {% for conversation in pagination %}
+        {% for message in conversation.messages %}
+            <p>{{ message.content}}</p>
+        {% endfor %}
+    {% endfor %}
+</div>
+{% endblock %}

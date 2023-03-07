@@ -42,13 +42,22 @@ class ConversationRepository extends ServiceEntityRepository
         }
     }
 
-    public function getUserConversationQueryBuilder(User $user): QueryBuilder
+    public function getUserConversationQueryBuilder(int $userId): QueryBuilder
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.user = :user')
-            ->setParameter('user', $user)
-            ->orderBy('c.createdAt', 'DESC');
+            ->leftJoin('c.user', 'user')
+            ->andWhere('user.id = :userId')
+            ->setParameter('userId', $userId);
     }
+
+    public function getMessageByConversationQueryBuilder(int $conversationId): QueryBuilder
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.id = :conversationId')
+            ->setParameter('conversationId', $conversationId);
+    }
+
+    
 
 //    /**
 //     * @return Conversation[] Returns an array of Conversation objects

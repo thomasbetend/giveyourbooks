@@ -19,15 +19,34 @@ class ConversationController extends AbstractController
         Request $request
     ): Response
     {
-        $user = $this->getUser();
+        $userId = $this->getUser()->getId();
 
         $pagination = $paginator->paginate(
-            $conversationRepository->getUserConversationQueryBuilder($user),
+            $conversationRepository->getUserConversationQueryBuilder($userId),
             $request->query->getInt('page', 1),
             limit: 10
         );
 
         return $this->render('conversation/index.html.twig', [
+            'pagination' => $pagination,
+        ]);
+    }
+
+    #[Route('/mesconversations/{id<\d+>}', name: 'app_my_conversation')]
+    public function myConversation(
+        int $id,
+        ConversationRepository $conversationRepository,
+        PaginatorInterface $paginator,
+        Request $request
+    ): Response
+    {
+        $pagination = $paginator->paginate(
+            $conversationRepository->getMessageByConversationQueryBuilder($id),
+            $request->query->getInt('page', 1),
+            limit: 10
+        );
+
+        return $this->render('conversation/show.html.twig', [
             'pagination' => $pagination,
         ]);
     }

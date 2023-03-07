@@ -22,8 +22,8 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item italic-dropdown">{{ app.user|capitalize }} de {{ app.user.city|capitalize }}</a>
                         <a class="dropdown-item" href="{{ path('app_my_book_ad')}}">Mes dons</a>
+                        <a class="dropdown-item" href="{{ path('app_my_conversations')}}">Messagerie</a>
                         <a class="dropdown-item" href="{{ path('app_logout')}}">Déconnexion</a>
-                        
                 </div>
             </li>
             {% else %}

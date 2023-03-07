@@ -3,10 +3,10 @@
 {% block title %}Hello ConversationController!{% endblock %}
 
 {% block body %}
-
-
+<div class="navigation pagination pagination-sm d-flex justify-content-center">
+    {{ knp_pagination_render(pagination) }}
+</div>
 <div class="container w-75">
-    {% for conversation in pagination %}
         <h1 class="mt-4">Conversation avec 
             {% for user in conversation.user %}
                 {% if user != app.user %}
@@ -14,7 +14,7 @@
                 {% endif %}
             {% endfor %}
         </h1>
-        {% for message in conversation.messages %}
+        {% for message in pagination %}
                 {% if message.user != app.user %}
                 <div class="d-flex">
                     <div class="card text-right col-6 p-2 m-1 message-left">{{ message.content}}</div>
@@ -26,6 +26,10 @@
                 {% endif %}
             
         {% endfor %}
-    {% endfor %}
+        {{ form_start(form) }}
+            {{ form_widget(form)}}
+            <button class="btn btn-primary">{{ button_label|default('Envoyer') }}</button>
+        {{ form_end(form) }}
+
 </div>
 {% endblock %}

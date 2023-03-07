@@ -9,10 +9,10 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends Fixture
 {
-    public const USER_1 = 'USER_1';
-    public const USER_2 = 'USER_2';
-    public const USER_3 = 'USER_3';
-    public const USER_4 = 'USER_4';
+    public const USER_ADMIN = 'USER_ADMIN';
+    public const USER_THOMAS = 'USER_THOMAS';
+    public const USER_SIMONE = 'USER_SIMONE';
+    public const USER_GINA = 'USER_GINA';
 
     public function __construct(private UserPasswordHasherInterface $passwordHasher)
     {
@@ -31,7 +31,7 @@ class UserFixtures extends Fixture
         $admin->setRoles(['ROLE_ADMIN']);
         $admin->setAddress('195 rue des pyrénées 75020 paris');
         $admin->setCity('paris');
-        $this->addReference(self::USER_1, $admin);
+        $this->addReference(self::USER_ADMIN, $admin);
         $manager->persist($admin);
 
         $thomas = new User();
@@ -43,7 +43,7 @@ class UserFixtures extends Fixture
         );
         $thomas->setPassword($hashedPassword2);
         $thomas->setAddress('6 rue de la Croix-Blanche 78870 bailly');
-        $this->addReference(self::USER_2, $thomas);
+        $this->addReference(self::USER_THOMAS, $thomas);
         $manager->persist($thomas);
 
         $simone = new User();
@@ -55,7 +55,7 @@ class UserFixtures extends Fixture
         );
         $simone->setPassword($hashedPassword3);
         $simone->setAddress('noisy-le-roi');
-        $this->addReference(self::USER_3, $simone);
+        $this->addReference(self::USER_SIMONE, $simone);
         $manager->persist($simone);
 
         $gina = new User();
@@ -67,7 +67,7 @@ class UserFixtures extends Fixture
         );
         $gina->setPassword($hashedPassword4);
         $gina->setAddress('Parc de l\'Etoile 67100 Strasbourg');
-        $this->addReference(self::USER_4, $gina);
+        $this->addReference(self::USER_GINA, $gina);
         $manager->persist($gina);
 
         $manager->flush();

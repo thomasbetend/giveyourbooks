@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Conversation;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\Form\ChoiceList\ORMQueryBuilderLoader;
 
 /**
  * @extends ServiceEntityRepository<Conversation>
@@ -37,6 +40,14 @@ class ConversationRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function getUserConversationQueryBuilder(User $user): QueryBuilder
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('c.createdAt', 'DESC');
     }
 
 //    /**

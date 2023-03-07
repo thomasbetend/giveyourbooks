@@ -1,11 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}BookAd{% endblock %}
+{% block title %}Annonce{% endblock %}
 
 {% block body %}
 <div class="container w-75 d-flex flex-column align-items-center">
-    <h1>{{ bookAd.title }}</h1>
-    <h6>{{ bookAd.description }}</h6>
-    <img src="{{ asset('images/' ~ bookAd.imagePath) | imagine_filter('list_thumbnail') }}" alt="{{ bookAd.imagePath }}">
+    <div class="card text-center mt-4">
+        <h1 class="mt-4">{{ bookAd.title }}</h1>
+        <h6 class="mx-4">{{ bookAd.description }}</h6>
+        <p>donné par {{ bookAd.user.pseudo }} à {{ bookAd.user.city }}</p>
+        <img src="{{ asset('images/' ~ bookAd.imagePath) | imagine_filter('list_thumbnail') }}" alt="{{ bookAd.imagePath }}">
+        <a href="#" class="btn btn-primary">Envoyer un message à {{ bookAd.user.pseudo }}</a>
+    </div>
 </div>
 {% endblock %}

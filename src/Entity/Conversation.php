@@ -21,6 +21,9 @@ class Conversation
     #[ORM\OneToMany(mappedBy: 'conversation', targetEntity: Message::class)]
     private Collection $messages;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $name = null;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
@@ -82,6 +85,18 @@ class Conversation
                 $message->setConversation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }

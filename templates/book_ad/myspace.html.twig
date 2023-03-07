@@ -21,7 +21,7 @@
                 <p class="card-text"><small>Publié par {{ bookAd.user.Pseudo|capitalize }} à {{ bookAd.place|capitalize }} le {{ bookAd.createdAt|date("m/d/Y") }}</small></p>
 
                 {% if app.user.id is not null and app.user.id == bookAd.user.Id %}
-                    <a href="#" class="btn btn-danger">supprimer</a>
+                    <a href="#" class="btn btn-secondary">supprimer</a>
                 {% endif %}
                 
             </div>

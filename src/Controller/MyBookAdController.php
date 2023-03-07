@@ -16,7 +16,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class MyBookAdController extends AbstractController
 {
-
+    #[IsGranted('ROLE_USER')]
     #[Route('/monespace', name: 'app_my_book_ad')]
     public function myspace(
         BookAdRepository $bookAdRepository,
@@ -39,7 +39,8 @@ class MyBookAdController extends AbstractController
         ]);
     }
 
-    #[Route('/donner', name: 'app_my_book_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
+    #[Route('/donner', name: 'app_my_book_ad_new', methods: ['GET', 'POST'])]
     public function new(Request $request, BookAdRepository $bookAdRepository): Response
     {
         $bookAd = new BookAd();

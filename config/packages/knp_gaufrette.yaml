@@ -1,0 +1,10 @@
+knp_gaufrette:
+    stream_wrapper: ~
+    adapters:
+        book_ad_photo:
+            local:
+                directory: '%kernel.project_dir%/public/images'
+    filesystems:
+        book_ad_photo:
+            adapter:    book_ad_photo
+            alias:      book_ad_photo_filesystem

@@ -1,12 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
+{% block title %}MyGive{% endblock %}
 
 {% block body %}
 
 <h1 class="mt-4 text-center">Autour de moi</h1>
-<div class="navigation d-flex justify-content-center">
+<div class="navigation pagination pagination-sm d-flex justify-content-center">
     {{ knp_pagination_render(pagination) }}
+</div>
+<div class="col-12 text-center">
+    <a class="btn btn-primary mt-3" href="{{ path('app_my_book_ad_new') }}">Je donne</a>
 </div>
 <div class="container w-75 d-flex flex-row flex-wrap">
     {% for result in pagination %}
@@ -14,9 +17,14 @@
             {% block actions %}
                 {{ parent() }}
                 {% if is_granted('ROLE_USER') and app.user.id != bookAd.user.id %}
-                    <a href="#" class="btn btn-primary">Je prends</a>
+                    <a href="{{ path('app_book_ad_show', {id: bookAd.id}) }}" class="btn btn-primary">Je prends</a>
                     <i class="fa-solid fa-location-dot"></i>
-                    <span>{{ result.distance | number_format }} km</span>
+                    {% if result.distance <= 1 %}
+                        <span class="distance"> Moins de 1 km</span>
+                        {% else %}
+                        <span class="distance">{{ result.distance | number_format }} km</span>
+                    {% endif %}
+                    
                 {% endif %}
             {% endblock %}
         {% endembed %}    

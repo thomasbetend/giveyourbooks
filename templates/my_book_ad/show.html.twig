@@ -3,32 +3,9 @@
 {% block title %}BookAd{% endblock %}
 
 {% block body %}
-    <h1>BookAd</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ book_ad.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ book_ad.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ book_ad.description }}</td>
-            </tr>
-            <tr>
-                <th>Place</th>
-                <td>{{ book_ad.place }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_book_ad_index') }}">back to list</a>
-
-    <a href="{{ path('app_book_ad_edit', {'id': book_ad.id}) }}">edit</a>
-
-    {{ include('my_book_ad/_delete_form.html.twig') }}
+<div class="container w-75 d-flex flex-column align-items-center">
+    <h1>{{ bookAd.title }}</h1>
+    <h6>{{ bookAd.description }}</h6>
+    <img src="{{ asset('images/' ~ bookAd.imagePath) | imagine_filter('list_thumbnail') }}" alt="{{ bookAd.imagePath }}">
+</div>
 {% endblock %}

@@ -5,12 +5,19 @@
 {% block body %}
 
 <div class="container w-75 d-flex flex-row flex-wrap">
+    <div class="d-flex flex-column align-items-center col-12">
+        <h1 class="mt-4">Donnez vos livres !!!</h1>
+        <h3 class="text-center text-secondary mt-1">Quelqu'un autour de vous a sûrement envie de les lire.</h3>
+        <div>
+            <a class="btn btn-primary text-white mt-3" href="{{ path('app_login') }}">Je donne</a>
+        </div>
+    </div>
     {% for bookAd in bookAds %}
         {% embed "./_parts/book_ad_card.html.twig" %}
             {% block actions %}
                 {{ parent() }}
                 {% if is_granted('ROLE_USER') and app.user.id != bookAd.user.id %}
-                    <a href="#" class="btn btn-primary">Je prends</a>
+                    <a href="{{ path('app_book_ad_show', {id: bookAd.id}) }}" class="btn btn-primary">Je prends</a>
                 {% endif %}
             {% endblock %}
         {% endembed %}    

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\BookAd;
 use App\Repository\BookAdRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,32 +19,38 @@ class HomeController extends AbstractController
         Request $request,
         ): Response
     {
-            if($this->getUser()) {
-                $userId = $this->getUser()->getId();
-                $latitude = $this->getUser()->getLatitude();
-                $longitude = $this->getUser()->getLongitude();
-    
-                $pagination = $paginator->paginate(
-                    $bookAdRepository->geocodeQueryBuilder($latitude, $longitude, $userId),
-                    $request->query->getInt('page', 1),
-                    limit: 10
-                );
+        if($this->getUser()) {
+            $userId = $this->getUser()->getId();
+            $latitude = $this->getUser()->getLatitude();
+            $longitude = $this->getUser()->getLongitude();
 
-                //dd($pagination);
-        
-                return $this->render('home/aroundme.html.twig', [
-                    'pagination' => $pagination,
-                ]);
+            $pagination = $paginator->paginate(
+                $bookAdRepository->geocodeQueryBuilder($latitude, $longitude, $userId),
+                $request->query->getInt('page', 1),
+                limit: 10
+            );
+
+            //dd($pagination);
     
-            } else {
-                $bookAds = $bookAdRepository->findRecent(10);
-    
-                return $this->render('home/index.html.twig', [
-                    'bookAds' => $bookAds,
-                ]);
-            }
-            
-        
+            return $this->render('home/aroundme.html.twig', [
+                'pagination' => $pagination,
+            ]);
+
+        } else {
+            $bookAds = $bookAdRepository->findRecent(3);
+
+            return $this->render('home/index.html.twig', [
+                'bookAds' => $bookAds,
+            ]);
+        }
+    }
+
+    #[Route('/{id}', name: 'app_book_ad_show', methods: ['GET'])]
+    public function show(BookAd $bookAd): Response
+    {
+        return $this->render('my_book_ad/show.html.twig', [
+            'bookAd' => $bookAd,
+        ]);
     }
 
 

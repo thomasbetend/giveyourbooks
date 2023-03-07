@@ -83,8 +83,8 @@ class BookAdRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('b')
             ->andWhere('b.user = :user')
-            ->setParameter('user', $user);
-
+            ->setParameter('user', $user)
+            ->orderBy('b.createdAt', 'DESC');
     }
 
     public function geocodeQueryBuilder(
@@ -100,7 +100,7 @@ class BookAdRepository extends ServiceEntityRepository
             ->setParameter('lng', $longitude)
             ->andWhere('user.id != :userId')
             ->setParameter('userId', $userId)
-            ->addOrderBy("distance", 'ASC');
+            ->addOrderBy('distance', 'ASC');
     }
 
     public function searchQueryBuilder(

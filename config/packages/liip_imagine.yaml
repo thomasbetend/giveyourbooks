@@ -14,5 +14,5 @@ liip_imagine:
                     position: center
                 background:
                     size: [250, 250]
-                    color: '#FFFFFF'
+                    color: '#000000'
                     position: center

@@ -2,6 +2,10 @@
 
 @import "~bootstrap/scss/bootstrap";
 
+@font-face{
+    font-family : 'TiltWarp';
+    src : url('../../public/fonts/TiltWarp-Regular.ttf') format('truetype');
+}
 
 body {
     background-color: rgb(255, 255, 255);
@@ -14,6 +18,11 @@ body {
 
 .nav-list-dropdown {
     margin-left: 25px !important;
+}
+
+.nav-bar-title {
+    font-family: 'TiltWarp';
+    font-size: 1.9rem;
 }
 
 .button-search {
@@ -43,7 +52,22 @@ body {
     height: 15px;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'TiltWarp';
+}
+
 h1 {
     color: $primary;
 }
 
+.btn {
+    color: white;
+
+    &:hover {
+        color: $secondary;
+    }
+}
+
+.distance {
+    font-size: 0.8rem;
+}

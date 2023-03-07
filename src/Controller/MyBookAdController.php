@@ -60,7 +60,7 @@ class MyBookAdController extends AbstractController
         ]);
     }
 
-    #[Route('/monespace/supprimer/{id<\d+>}', name: 'app_my_book_ad_delete', methods: ['GET', 'POST'])]
+    #[Route('/monespace/supprimer/{slug>}', name: 'app_my_book_ad_delete', methods: ['GET', 'POST'])]
     #[IsGranted('BOOK_AD_OWNER', 'bookAd')]
     public function delete(
         BookAd $bookAd,
@@ -77,7 +77,7 @@ class MyBookAdController extends AbstractController
         return $this->redirectToRoute('app_my_book_ad');
     }
 
-    #[Route('/monespace/editer/{id<\d+>}', name: 'app_my_book_ad_edit', methods: ['GET', 'POST'])]
+    #[Route('/monespace/editer/{slug}', name: 'app_my_book_ad_edit', methods: ['GET', 'POST'])]
     #[IsGranted('BOOK_AD_OWNER', 'bookAd')]
     public function edit(
         BookAd $bookAd,

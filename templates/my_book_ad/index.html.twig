@@ -16,7 +16,7 @@
                 {{ parent() }}
                 {% if is_granted('ROLE_USER') and app.user.id == bookAd.user.id %}
                     <a href="{{ path('app_my_book_ad_delete', { slug: bookAd.slug }) }}" onclick="return confirm('Etes vous sûr ?')" class="btn btn-secondary">Supprimer</a>
-                    <a href="{{ path('app_my_book_ad_edit', { slug: bookAd.slug }) }}" class="btn  btn-default">Modifier</a>
+                    <a href="{{ path('app_my_book_ad_edit', { slug: bookAd.slug }) }}" class="btn  btn-success">Modifier</a>
                 {% endif %}
             {% endblock %}
         {% endembed %}

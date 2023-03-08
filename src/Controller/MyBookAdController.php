@@ -92,7 +92,7 @@ class MyBookAdController extends AbstractController
             return $this->redirectToRoute('app_my_book_ad', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('my_book_ad/new.html.twig', [
+        return $this->render('my_book_ad/edit.html.twig', [
             'book_ad' => $bookAd,
             'form' => $form,
         ]);

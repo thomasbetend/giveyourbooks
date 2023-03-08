@@ -44,7 +44,8 @@ class MessageRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('m')
             ->leftJoin('m.conversation', 'c')
             ->andWhere('c.id = :conversationId')
-            ->setParameter('conversationId', $conversationId);
+            ->setParameter('conversationId', $conversationId)
+            ->orderBy('m.createdAt', 'DESC');
     }
 
 //    /**

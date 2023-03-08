@@ -1,35 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ConversationController!{% endblock %}
+{% block capitalize %}Hello ConversationController!{% endblock %}
 
 {% block body %}
 <div class="navigation pagination pagination-sm d-flex justify-content-center">
     {{ knp_pagination_render(pagination) }}
 </div>
 <div class="container w-75">
-        <h1 class="mt-4">Conversation avec 
+        <h3 class="mt-4">Conversation avec 
             {% for user in conversation.user %}
                 {% if user != app.user %}
                     {{ user.pseudo|capitalize }}
                 {% endif %}
             {% endfor %}
-        </h1>
-        {% for message in pagination %}
-                {% if message.user != app.user %}
-                <div class="d-flex">
-                    <div class="card text-right col-6 p-2 m-1 message-left">{{ message.content}}</div>
-                </div>
-                {% else %}
-                <div class="d-flex flex-row-reverse">
-                    <div class="card text-left bg-secondary col-6 p-2 m-1 message-right text-white">{{ message.content}}</div>
-                </div>
-                {% endif %}
-            
-        {% endfor %}
+        </h3>
+        <h6>{{ conversation.bookAd|capitalize }}</h6>
+        <img src="{{ asset('images/' ~ conversation.bookAd.imagePath) }}" alt="{{ conversation.bookAd.imagePath }}" >
+        <hr>
         {{ form_start(form) }}
             {{ form_widget(form)}}
             <button class="btn btn-primary">{{ button_label|default('Envoyer') }}</button>
         {{ form_end(form) }}
-
+        {% for message in pagination %}
+                {% if message.user != app.user %}
+                    <div class="d-flex">
+                        <div class="card text-right col-6 p-2 m-1 message-left">{{ message.content}}</div>
+                    </div>
+                {% else %}
+                    <div class="d-flex flex-row-reverse">
+                        <div class="card text-left bg-secondary col-6 p-2 m-1 message-right text-white">{{ message.content}}</div>
+                    </div>
+                {% endif %}
+        {% endfor %}
 </div>
 {% endblock %}

@@ -3,11 +3,11 @@
 {% block title %}Edit BookAd{% endblock %}
 
 {% block body %}
-    <h1>Edit BookAd</h1>
+<div class="container w-75">
+    <h1 class="mt-4">Modifier votre don</h1>
 
-    {{ include('my_book_ad/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('my_book_ad/_form.html.twig', {'button_label': 'Modifier'}) }}
 
-    <a href="{{ path('app_book_ad_index') }}">back to list</a>
-
-    {{ include('my_book_ad/_delete_form.html.twig') }}
+    <a href="{{ path('app_home') }}" class="btn btn-default">Retour à l'accueil</a>
+</div>
 {% endblock %}

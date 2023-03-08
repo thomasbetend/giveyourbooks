@@ -26,7 +26,8 @@ class BookAdType extends AbstractType
                 'label' => 'Catégorie',
             ])
             ->add('imageFile', VichImageType::class, [
-                'label' => 'Image'
+                'label' => 'Image (pas obligatoire)',
+                'required' => false
             ]
             )
         ;

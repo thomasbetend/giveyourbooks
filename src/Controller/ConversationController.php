@@ -13,9 +13,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBus;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ConversationController extends AbstractController
 {
+    #[IsGranted('ROLE_USER')]
     #[Route('/mesconversations', name: 'app_my_conversations')]
     public function myConversations(
         ConversationRepository $conversationRepository,
@@ -36,17 +38,20 @@ class ConversationController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_USER')]
     #[Route('/mesconversations/{id<\d+>}', name: 'app_my_conversation')]
     public function myConversation(
-        int $id,
-        ConversationRepository $conversationRepository,
+        Conversation $conversation,
         MessageRepository $messageRepository,
         PaginatorInterface $paginator,
         Request $request
     ): Response
     {
+        if (!in_array($this->getUser(), $conversation->getUser()->toArray())) {
+            return $this->redirectToRoute('app_home');
+        }
+
         $message = new Message();
-        $conversation = $conversationRepository->find($id);
 
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
@@ -58,12 +63,12 @@ class ConversationController extends AbstractController
             $messageRepository->save($message, true);
             
             return $this->redirectToRoute('app_my_conversation', [
-                'id' => $id
+                'id' => $conversation->getId(),
             ]);
         }
 
         $pagination = $paginator->paginate(
-            $messageRepository->getMessageByConversationIdQueryBuilder($id),
+            $messageRepository->getMessageByConversationIdQueryBuilder($conversation->getId()),
             $request->query->getInt('page', 1),
             limit: 10
         );

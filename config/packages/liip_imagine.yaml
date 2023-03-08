@@ -8,6 +8,10 @@ liip_imagine:
         original: ~
         list_thumbnail:
             filters:
+                min:
+                    size: [50, 50]
+                    mode: inset
+                    position: center
                 thumbnail:
                     size: [250, 250]
                     mode: inset

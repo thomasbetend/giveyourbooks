@@ -4,12 +4,14 @@
 
 {% block body %}
 <div class="container w-75 d-flex flex-column align-items-center">
-    <div class="card text-center mt-4">
-        <h1 class="mt-4">{{ bookAd.title }}</h1>
+    <div class="card card-detail text-center mt-4">
+        <h1 class="mt-4">{{ bookAd.title|capitalize }}</h1>
         <h6 class="mx-4">{{ bookAd.description }}</h6>
-        <p>donné par {{ bookAd.user.pseudo }} à {{ bookAd.user.city }}</p>
+        <p class="text-detail">Donné par {{ bookAd.user.pseudo|capitalize }} à {{ bookAd.user.city|capitalize }}</p>
+        <div>
+            <a href="#" class="btn btn-primary">Envoyer un message à {{ bookAd.user.pseudo|capitalize }}</a>
+        </div>
         <img src="{{ asset('images/' ~ bookAd.imagePath) | imagine_filter('list_thumbnail') }}" alt="{{ bookAd.imagePath }}">
-        <a href="#" class="btn btn-primary">Envoyer un message à {{ bookAd.user.pseudo }}</a>
     </div>
 </div>
 {% endblock %}

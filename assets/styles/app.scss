@@ -1,5 +1,10 @@
 @import "variables";
 
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/brands';
+
 @import "~bootstrap/scss/bootstrap";
 
 @font-face{
@@ -78,4 +83,16 @@ h1 {
 
 .message-right {
     border-radius: 10px 10px 0px 10px !important;
+}
+
+.card-home {
+    width: 300px;
+}
+
+.card-detail {
+    width: 600px;
+}
+
+.text-detail {
+    font-size: 0.8rem;
 }

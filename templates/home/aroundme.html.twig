@@ -8,23 +8,22 @@
 <div class="navigation pagination pagination-sm d-flex justify-content-center">
     {{ knp_pagination_render(pagination) }}
 </div>
-<div class="col-12 text-center">
+<div class="col-12 text-center mb-2">
     <a class="btn btn-primary mt-3" href="{{ path('app_my_book_ad_new') }}">Je donne</a>
 </div>
-<div class="container w-75 d-flex flex-row flex-wrap">
+<div class="container w-100 d-flex flex-row flex-wrap justify-content-center">
     {% for result in pagination %}
         {% embed "./_parts/book_ad_card.html.twig" with { bookAd: result[0] } %}
             {% block actions %}
                 {{ parent() }}
                 {% if is_granted('ROLE_USER') and app.user.id != bookAd.user.id %}
-                    <a href="{{ path('app_book_ad_show', { slug: bookAd.slug }) }}" class="btn btn-primary">Je prends</a>
-                    <i class="fa-solid fa-location-dot"></i>
-                    {% if result.distance <= 1 %}
-                        <span class="distance"> Moins de 1 km</span>
-                        {% else %}
-                        <span class="distance">{{ result.distance | number_format }} km</span>
-                    {% endif %}
+                    <a href="{{ path('app_book_ad_show', { slug: bookAd.slug }) }}" class="btn btn-primary btn-take">Je prends</a>
                     
+                    {% if result.distance <= 1 %}
+                        <span class="distance mx-4"><i class="fa-solid fa-location-dot"></i> Moins de 1 km</span>
+                        {% else %}
+                        <span class="distance mx-4"><i class="fa-solid fa-location-dot"></i> {{ result.distance | number_format }} km</span>
+                    {% endif %}
                 {% endif %}
             {% endblock %}
         {% endembed %}    

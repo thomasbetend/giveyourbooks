@@ -1,11 +1,11 @@
-<div class="card mt-4 col-4">
+<div class="card card-home m-2">
     <img class="card-img-top card-background-image" src="{{ asset('images/' ~ bookAd.imagePath) | imagine_filter('list_thumbnail') }}" alt="Card image cap">
     <div class="card-body">
         <div class="title-category-box d-flex justify-content-between">
             <h5 class="card-title text-secondary">{{ bookAd.title|u.truncate(10, ' ...', false)|capitalize }}</h5>
             <p class="card-text small-text px-2">{{ bookAd.category }}</p>
         </div>
-        <p class="card-text">{{ bookAd.description|u.truncate(20, ' ...', false) }}</p>
+        <p class="card-text text-detail">{{ bookAd.description|u.truncate(20, ' ...', false) }}</p>
         <p class="card-text text-primary"><small>{{ bookAd.user|capitalize }} à {{bookAd.user.city}}</small></p>
         
         {% block actions %}

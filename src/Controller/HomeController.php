@@ -45,12 +45,4 @@ class HomeController extends AbstractController
         }
     }
 
-    #[Route('/fiche/{slug}', name: 'app_book_ad_show', methods: ['GET'])]
-    public function show(BookAd $bookAd): Response
-    {
-        return $this->render('my_book_ad/show.html.twig', [
-            'bookAd' => $bookAd,
-        ]);
-    }
-
 }

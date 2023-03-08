@@ -8,9 +8,15 @@
         <h1 class="mt-4">{{ bookAd.title|capitalize }}</h1>
         <h6 class="mx-4">{{ bookAd.description }}</h6>
         <p class="text-detail">Donné par {{ bookAd.user.pseudo|capitalize }} à {{ bookAd.user.city|capitalize }}</p>
-        <div>
-            <a href="#" class="btn btn-primary">Envoyer un message à {{ bookAd.user.pseudo|capitalize }}</a>
-        </div>
+        {% if conversation|length > 0 %}
+            <div>
+                <a href="{{ path('app_my_conversation', {id : conversation[0].id}) }}" class="btn btn-primary">Envoyer un message à {{ bookAd.user.pseudo|capitalize }}</a>
+            </div>
+        {% else %}
+            <div>
+                {{ form(form) }}
+            </div>
+        {% endif %}
         <img src="{{ asset('images/' ~ bookAd.imagePath) }}" alt="{{ bookAd.imagePath }}">
     </div>
 </div>

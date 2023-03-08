@@ -57,6 +57,20 @@ class ConversationRepository extends ServiceEntityRepository
             ->setParameter('conversationId', $conversationId);
     }
 
+    public function getConversationByUserIdAndBookAd(int $userId, int $bookAdId): array
+    {
+        return $this->createQueryBuilder('c')
+            ->leftJoin('c.user', 'user')
+            ->andWhere('user.id = :userId')
+            ->setParameter('userId', $userId)
+            ->leftJoin('c.bookAd', 'bookAd')
+            ->andWhere('bookAd.id = :bookAdId')
+            ->setParameter('bookAdId', $bookAdId)
+            ->getQuery()
+            ->getResult();
+    }
+    
+
     
 
 //    /**

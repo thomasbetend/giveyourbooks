@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\BookAd;
+use App\Entity\Conversation;
 use App\Entity\User;
 use App\Form\BookAdType;
+use App\Form\ConversationType;
 use App\Repository\BookAdRepository;
+use App\Repository\ConversationRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -94,6 +97,42 @@ class MyBookAdController extends AbstractController
 
         return $this->render('my_book_ad/edit.html.twig', [
             'book_ad' => $bookAd,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/fiche/{slug}', name: 'app_book_ad_show', methods: ['GET', 'POST'])]
+    public function show(
+        BookAd $bookAd,
+        ConversationRepository $conversationRepository,
+        Request $request
+    ): Response
+    {
+        //dd($request);
+
+        $userId = $this->getUser()->getId();
+        $bookAdId = $bookAd->getId();
+
+        $conversation = new Conversation();
+        $conversationExisting = $conversationRepository->getConversationByUserIdAndBookAd($userId, $bookAdId);
+
+        $form = $this->createForm(ConversationType::class, $conversation);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $conversation->setBookAd($bookAd);
+            $conversation->addUser($this->getUser());
+            $conversation->addUser($bookAd->getUser());
+            $conversationRepository->save($conversation, true);
+
+            return $this->redirectToRoute('app_my_conversation', [
+                'id' => $conversation->getId(),
+            ]);        
+        }
+
+        return $this->render('my_book_ad/show.html.twig', [
+            'bookAd' => $bookAd,
+            'conversation' => $conversationExisting,
             'form' => $form,
         ]);
     }

@@ -18,9 +18,12 @@
         <img src="{{ asset('images/' ~ conversation.bookAd.imagePath) }}" alt="{{ conversation.bookAd.imagePath }}" >
         <hr>
         {{ form_start(form) }}
-            {{ form_widget(form)}}
-            <button class="btn btn-primary">{{ button_label|default('Envoyer') }}</button>
+            <div class="d-flex  justify-content-center">
+                {{ form_widget(form)}}
+                <button class="btn btn-primary">{{ button_label|default('Envoyer') }}</button>
+            </div>
         {{ form_end(form) }}
+        <hr>
         {% for message in pagination %}
                 {% if message.user != app.user %}
                     <div class="d-flex">

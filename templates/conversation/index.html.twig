@@ -8,18 +8,16 @@
 <div class="container w-75">
     <h1 class="mt-4">Conversations</h1>
     {% for conversation in pagination %}
-        {# <h2>{{ conversation.name}}</h2> #}
-        <h6>Annonce : {{ conversation.bookAd }}</h6>
-        {% for user in conversation.user %}
-            {% if user != app.user %}
-                <a href="{{ path('app_my_conversation', {id: conversation.id}) }}">
-                    <div class="card col-12 bg-primary text-white">{{ user.pseudo|capitalize }} à {{ user.city|capitalize }}</div>
-                </a>
-            {% endif %}
-        {% endfor %}
-        {# {% for message in conversation.messages %}
-            <p>{{ message.content}}</p>
-        {% endfor %} #}
+    <a href="{{ path('app_my_conversation', {id: conversation.id}) }}" class="text-white text-decoration-none">
+        <div class="card col-12 bg-primary text-white p-3 mt-3">
+            <h6>Annonce : <span class="text-secondary">{{ conversation.bookAd }}</span></h6>
+            {% for user in conversation.user %}
+                {% if user != app.user %}
+                    <div><i class="fa fa-envelope mx-3" aria-hidden="true"></i>{{ user.pseudo|capitalize }} à {{ user.city|capitalize }}</div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </a>
     {% endfor %}
 </div>
 {% endblock %}

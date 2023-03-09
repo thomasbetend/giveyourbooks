@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MessageController extends AbstractController
 {
-    #[Route('/all_messages_read', name: 'app_message')]
+    #[Route('/all_messages_read', name: 'app_all_message')]
     public function areAllMessagesRead(
         MessageRepository $messageRepository
     ): JsonResponse

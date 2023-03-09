@@ -108,8 +108,6 @@ class MyBookAdController extends AbstractController
         Request $request
     ): Response
     {
-        //dd($request);
-
         $userId = $this->getUser()->getId();
         $bookAdId = $bookAd->getId();
 

@@ -4,7 +4,14 @@
 
 {% block body %}
 
-<h1 class="mt-4 text-center">{{ pagination.getTotalItemCount }} résultats</h1>
+<h1 class="mt-4 text-center">
+    {{ pagination.getTotalItemCount }}  
+    {% if pagination.getTotalItemCount <= 1 %}
+        résultat
+    {% else %}
+        résultats
+    {% endif %}
+</h1>
 <div class="navigation d-flex justify-content-center">
     {{ knp_pagination_render(pagination) }}
 </div>
@@ -15,7 +22,11 @@
                 {{ parent() }}
                 {% if is_granted('ROLE_USER') and app.user.id != bookAd.user.id %}
                     <a href="#" class="btn btn-primary">Je prends</a>
-                    <span>{{ result.distance | number_format }} km</span>
+                    {% if result.distance | number_format <= 1 %}
+                        <span class="distance mx-4"><i class="fa-solid fa-location-dot"></i> Moins de 1 km</span>
+                    {% else %}
+                        <span class="distance mx-4"><i class="fa-solid fa-location-dot"></i> {{ result.distance | number_format }} km</span>
+                    {% endif %}
                 {% endif %}
             {% endblock %}
         {% endembed %}    

@@ -14,5 +14,17 @@ liip_imagine:
                     position: center
                 background:
                     size: [250, 250]
-                    color: '#000000'
+                    color: '#FFFFFF'
                     position: center
+
+        miniphotos:
+            filters:
+                thumbnail:
+                    size: [100, 100]
+                    mode: inset
+                    position: center
+                background:
+                    size: [100, 100]
+                    color: '#FFFFFF'
+                    position: center
+

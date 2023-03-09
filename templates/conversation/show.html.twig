@@ -14,24 +14,30 @@
                 {% endif %}
             {% endfor %}
         </h3>
-        <h6>{{ conversation.bookAd|capitalize }}</h6>
-        <img src="{{ asset('images/' ~ conversation.bookAd.imagePath) }}" alt="{{ conversation.bookAd.imagePath }}" >
-        <hr>
+        <div class="d-flex">
+            <h6>{{ conversation.bookAd|capitalize }}</h6>
+            <img src="{{ asset('images/' ~ conversation.bookAd.imagePath)  | imagine_filter('miniphotos') }}" alt="{{ conversation.bookAd.imagePath }}" >
+        </div>
         {{ form_start(form) }}
-            <div class="d-flex  justify-content-center">
-                {{ form_widget(form)}}
-                <button class="btn btn-primary">{{ button_label|default('Envoyer') }}</button>
+            <div class="bg-light my-2 d-flex p-3 justify-content-center send-message-box">
+                <div class="form-message">{{ form_widget(form)}}</div>
+                <button class="btn btn-primary btn-send-message">{{ button_label|default('Envoyer') }}</button>
             </div>
         {{ form_end(form) }}
-        <hr>
         {% for message in pagination %}
                 {% if message.user != app.user %}
                     <div class="d-flex">
-                        <div class="card text-right col-6 p-2 m-1 message-left">{{ message.content}}</div>
+                        <div class="col-6">
+                            <div class="card text-right p-2 m-1 message-left">{{ message.content}}</div>
+                            <p class="px-3 text-detail">{{ message.createdAt|format_datetime('short', 'short', locale='fr') }}</p>
+                        </div>
                     </div>
                 {% else %}
                     <div class="d-flex flex-row-reverse">
-                        <div class="card text-left bg-secondary col-6 p-2 m-1 message-right text-white">{{ message.content}}</div>
+                        <div class="col-6">
+                            <div class="card text-left bg-secondary p-2 m-1 message-right text-white">{{ message.content}}</div>
+                            <p class="px-3 text-detail">{{ message.createdAt|format_datetime('short', 'short', locale='fr') }}</p>
+                        </div>
                     </div>
                 {% endif %}
         {% endfor %}

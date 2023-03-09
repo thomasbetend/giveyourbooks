@@ -98,8 +98,8 @@ class BookAdRepository extends ServiceEntityRepository
             ->addSelect('(6353 * 2 * ASIN(SQRT( POWER(SIN((user.latitude - :lat) *  pi()/180 / 2), 2) +COS(user.latitude * pi()/180) * COS(:lat * pi()/180) * POWER(SIN((user.longitude - :lng) * pi()/180 / 2), 2) ))) AS distance')
             ->setParameter('lat', $latitude)
             ->setParameter('lng', $longitude)
-            ->andWhere('user.id != :userId')
-            ->setParameter('userId', $userId)
+            // ->andWhere('user.id != :userId')
+            // ->setParameter('userId', $userId)
             ->addOrderBy('distance', 'ASC');
     }
 
@@ -116,10 +116,10 @@ class BookAdRepository extends ServiceEntityRepository
                 ->addSelect('(6353 * 2 * ASIN(SQRT( POWER(SIN((user.latitude - :lat) *  pi()/180 / 2), 2) +COS(user.latitude * pi()/180) * COS(:lat * pi()/180) * POWER(SIN((user.longitude - :lng) * pi()/180 / 2), 2) ))) AS distance')
                 ->setParameter('lat', $latitude)
                 ->setParameter('lng', $longitude)
-                ->andWhere('user.id != :userId')
+                // ->andWhere('user.id != :userId')
                 ->andWhere('b.title LIKE :q OR b.description LIKE :q')
                 ->setParameter('q', '%' . $q . '%')
-                ->setParameter('userId', $userId)
+                // ->setParameter('userId', $userId)
                 ->addOrderBy("distance", 'ASC');
         }
     }

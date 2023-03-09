@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Conversation;
 use App\Entity\Message;
+use App\Entity\User;
 use App\Form\MessageType;
 use App\Repository\ConversationRepository;
 use App\Repository\MessageRepository;
@@ -53,11 +54,30 @@ class ConversationController extends AbstractController
 
         $message = new Message();
 
+        foreach ($conversation->getUser() as $user) {
+            if ($user != $this->getUser()) {
+                $userDestination = $user;
+            }
+        }
+
+        $messagesSeenByUser = $messageRepository->findBy([
+            'user' => $userDestination,
+            'user_destination' => $this->getUser(),
+            'seenByUserDestination' => false,
+        ]);
+
+        foreach ($messagesSeenByUser as $message) {
+            $message->setSeenByUserDestination(true);
+            $messageRepository->save($message, true);
+        }
+
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $message->setUser($this->getUser());
+            $message->setUserDestination($userDestination);
+            $message->setSeenByUserDestination(false);
             $message->setConversation($conversation);
 
             $messageRepository->save($message, true);

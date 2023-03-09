@@ -67,12 +67,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $resetToken = null;
 
+    #[ORM\OneToMany(mappedBy: 'user_destination', targetEntity: Message::class)]
+    private Collection $messages_user_destination;
+
     public function __construct()
     {
         $this->books = new ArrayCollection();
         $this->bookAds = new ArrayCollection();
         $this->conversations = new ArrayCollection();
         $this->messages = new ArrayCollection();
+        $this->messages_user_destination = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -335,6 +339,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setResetToken(?string $resetToken): self
     {
         $this->resetToken = $resetToken;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Message>
+     */
+    public function getMessagesUserDestination(): Collection
+    {
+        return $this->messages_user_destination;
+    }
+
+    public function addMessagesUserDestination(Message $messagesUserDestination): self
+    {
+        if (!$this->messages_user_destination->contains($messagesUserDestination)) {
+            $this->messages_user_destination->add($messagesUserDestination);
+            $messagesUserDestination->setUserDestination($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessagesUserDestination(Message $messagesUserDestination): self
+    {
+        if ($this->messages_user_destination->removeElement($messagesUserDestination)) {
+            // set the owning side to null (unless already changed)
+            if ($messagesUserDestination->getUserDestination() === $this) {
+                $messagesUserDestination->setUserDestination(null);
+            }
+        }
 
         return $this;
     }

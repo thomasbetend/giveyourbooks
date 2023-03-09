@@ -26,6 +26,12 @@ class Message
     #[ORM\ManyToOne(inversedBy: 'messages')]
     private ?Conversation $conversation = null;
 
+    #[ORM\ManyToOne(inversedBy: 'messages_user_destination')]
+    private ?User $user_destination = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $seenByUserDestination = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -63,6 +69,30 @@ class Message
     public function setConversation(?Conversation $conversation): self
     {
         $this->conversation = $conversation;
+
+        return $this;
+    }
+
+    public function getUserDestination(): ?User
+    {
+        return $this->user_destination;
+    }
+
+    public function setUserDestination(?User $user_destination): self
+    {
+        $this->user_destination = $user_destination;
+
+        return $this;
+    }
+
+    public function isSeenByUserDestination(): ?bool
+    {
+        return $this->seenByUserDestination;
+    }
+
+    public function setSeenByUserDestination(?bool $seenByUserDestination): self
+    {
+        $this->seenByUserDestination = $seenByUserDestination;
 
         return $this;
     }

@@ -1,5 +1,5 @@
 <div class="card card-home m-2">
-    <img class="card-img-top card-background-image" src="{{ asset('images/' ~ bookAd.imagePath) | imagine_filter('list_thumbnail') }}" alt="Card image cap">
+    <img class="card-img-top card-background-image" src="{{ vich_uploader_asset(bookAd, 'imageFile') | imagine_filter('list_thumbnail') }}" alt="Card image cap">
     <div class="card-body">
         <div class="title-category-box d-flex justify-content-between">
             <h5 class="card-title text-secondary">{{ bookAd.title|u.truncate(10, ' ...', false)|capitalize }}</h5>

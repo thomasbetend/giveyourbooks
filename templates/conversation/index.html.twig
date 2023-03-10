@@ -9,11 +9,15 @@
     <h1 class="mt-4">Conversations</h1>
     {% for conversation in pagination %}
     <a href="{{ path('app_my_conversation', {id: conversation.id}) }}" class="text-white text-decoration-none">
-        <div class="card col-12 bg-primary text-white p-3 mt-3">
-            <h6>Annonce : <span class="text-secondary">{{ conversation.bookAd }}</span></h6>
+        <div class="card col-12 bg-light text-white p-3 mt-3">
+            <h6><span class="text-secondary">Annonce : {{ conversation.bookAd }}</span></h6>
             {% for user in conversation.user %}
                 {% if user != app.user %}
-                    <div><i class="fa fa-envelope mx-3" aria-hidden="true"></i>{{ user.pseudo|capitalize }} à {{ user.city|capitalize }}</div>
+                    <div class="text-secondary" data-controller="conversationmessagenotif">
+                        <div data-conversationmessagenotif-target="notif" class=""></div>
+                        <div data-conversationmessagenotif-target="conversationId"  style="display: none;">{{ conversation.id }}</div>
+                        <i class="fa fa-envelope mx-3" aria-hidden="true"></i>{{ user.pseudo|capitalize }} à {{ user.city|capitalize }}
+                    </div>
                 {% endif %}
             {% endfor %}
         </div>

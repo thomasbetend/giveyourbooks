@@ -34,7 +34,7 @@ class MessageController extends AbstractController
         ]);
     }
 
-    #[Route('/messages_in_conversation_read/{id}', name: 'app_message')]
+    #[Route('/messages_in_conversation_read/{id}', name: 'app_message_in_conversation')]
     public function areMessagesInConversationRead(
         Conversation $conversation,
         MessageRepository $messageRepository
@@ -60,6 +60,46 @@ class MessageController extends AbstractController
 
         return new JsonResponse([
             'arelMessagesInConversationRead' => $arelMessagesInConversationRead,
+        ]);
+    }
+
+    #[Route('/new_message_in_conversation/{id}', name: 'app_new_message')]
+    public function newMessagesInConversation(
+        Conversation $conversation,
+        MessageRepository $messageRepository
+    ): JsonResponse
+    {
+        if (!in_array($this->getUser(), $conversation->getUser()->toArray())) {
+            return new JsonResponse([
+                'erreur' => 'Vous n\'avez pas les droits'
+            ]);
+        }
+
+        $newMessages = $messageRepository->findBy([
+            'conversation' => $conversation,
+            'user_destination' => $this->getUSer(),
+            'seenByUserDestination' => false,
+        ]);
+
+        if ($newMessages) {
+            $newMessagesToDisplay = true;
+        } else {
+            $newMessagesToDisplay = false;
+        }
+
+        $newMessagesToPass = [];
+
+        foreach ($newMessages as $newMessage) {
+            $newMessagesToPass[] = [$newMessage->getContent(), $newMessage->getCreatedAt()];
+            $newMessage->setSeenByUserDestination(true);
+            $messageRepository->save($newMessage, true);
+        }
+
+        //dd($newMessagesToPass);
+
+        return new JsonResponse([
+            'newMessagesToDisplay' => $newMessagesToDisplay,
+            'newMessagesToPass' => $newMessagesToPass,
         ]);
     }
 }

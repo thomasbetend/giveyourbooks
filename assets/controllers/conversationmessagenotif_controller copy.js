@@ -1,16 +1,17 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-    static targets = [ "notif" ]
+    static targets = [ 'notif', 'conversationId' ]
 
     connect() {
+        let conversationId = this.conversationIdTarget.textContent;
 
         setInterval(() => {
-            fetch('/all_messages_read')
+            fetch('/messages_in_conversation_read/' + conversationId)
                 .then((response) => response.json())
                 .then((data) => {
-                    //console.log(data.areAllMessagesRead);
-                    if (data.areAllMessagesRead === false) {
+                    console.log(data.arelMessagesInConversationRead);
+                    if (data.arelMessagesInConversationRead === false) {
                         this.notifTarget.classList.add('red-notif-message');
                     }
                 });

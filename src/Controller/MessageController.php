@@ -52,6 +52,8 @@ class MessageController extends AbstractController
             'seenByUserDestination' => false,
         ]);
 
+        //dd($messagesNotRead);
+
         if ($messagesNotRead) {
             $arelMessagesInConversationRead = false;
         } else {

@@ -5,15 +5,7 @@ export default class extends Controller {
 
     connect() {
 
-       // console.log('youhou');
-        //this.messagesTarget.innerHTML = 'coucou';
         let conversationId = this.conversationIdTarget.textContent;
-
-        fetch('/new_message_in_conversation/' + conversationId)
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data.newMessagesToPass);
-        })
 
         setInterval(() => {
             fetch('/new_message_in_conversation/' + conversationId)
@@ -23,12 +15,26 @@ export default class extends Controller {
                     let newMessageContent = newMessage[0];
                     let newMessageDate = newMessage[1].date;
 
-                    this.messageContentTarget.style.display = 'block';
-                    this.messageContentTarget.textContent = newMessageContent;
-                    this.messageDateTarget.textContent = newMessageDate;
-    
-                    console.log(newMessageContent, newMessageDate);
+
+                    let messageHtml = "<div class='d-flex'>\
+                                            <div class='col-6'>\
+                                                <div class='card text-right p-2 m-1 message-left'>" + newMessageContent + "</div>\
+                                                <p class='px-3 text-detail' data-newmessage-target='messageDate'>" + this.formatDateForMessage(newMessageDate) + "</p>\
+                                            </div>\
+                                        </div>";
+                    
+                    const div = document.createElement("div");
+                    this.messageTarget.prepend(div);
+                    div.innerHTML = messageHtml;
+
+                    // console.log(newMessageContent, this.formatDateForMessage(newMessageDate));
             })
-        }, 500);
+        }, 3000);
+    }
+
+    formatDateForMessage(dateMessage) {
+        let date = new Date(dateMessage);
+        
+        return date.toLocaleDateString('fr') + ' ' + date.getHours() + ':' + date.getUTCMinutes();
     }
 }

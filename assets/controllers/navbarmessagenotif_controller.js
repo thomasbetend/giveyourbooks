@@ -14,6 +14,6 @@ export default class extends Controller {
                         this.notifTarget.classList.add('red-notif-message');
                     }
                 });
-        }, 500);
+        },500);
     }
 }

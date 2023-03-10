@@ -45,6 +45,20 @@ body {
     color: rgb(103, 103, 103) !important;
 }
 
+.notif-message-navbar {
+    margin-top: 20px;
+}
+
+.fa-comments {
+    font-size: 1.4rem;
+    padding-top: 22px;
+    margin-left: 20px;
+}
+
+a.link-message-navbar {
+    text-decoration: none;
+}
+
 .card-width {
     width: 400px;
 }
@@ -63,6 +77,10 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
     color: $primary;
+}
+
+h2, h3, h4, h5, h6 {
+    color: $secondary;
 }
 
 .btn {
@@ -122,3 +140,17 @@ h1 {
     border-radius: 20px;
     background-color: red;
 }
+
+.fa-envelope {
+    font-size: 1.4rem;
+}
+
+.conversation-box {
+    display: flex;
+    align-items: end;
+}
+
+.notif-conversation {
+    margin-left: 5px;
+}
+

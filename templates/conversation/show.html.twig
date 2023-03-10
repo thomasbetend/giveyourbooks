@@ -3,10 +3,10 @@
 {% block capitalize %}Hello ConversationController!{% endblock %}
 
 {% block body %}
-<div class="navigation pagination pagination-sm d-flex justify-content-center">
+<div class="navigation pagination pagination-sm d-flex justify-content-center mt-2">
     {{ knp_pagination_render(pagination) }}
 </div>
-<div class="container w-75" data-controller="newmessage">
+<div class="container w-75">
         <h3 class="mt-4">Conversation avec 
             {% for user in conversation.user %}
                 {% if user != app.user %}
@@ -16,7 +16,7 @@
         </h3>
         <div class="d-flex">
             <h6>{{ conversation.bookAd|capitalize }}</h6>
-            <img src="{{ asset('images/' ~ conversation.bookAd.imagePath)  | imagine_filter('miniphotos') }}" alt="{{ conversation.bookAd.imagePath }}" >
+            <img src="{{ asset('images/' ~ conversation.bookAd.imagePath)  | imagine_filter('miniphotos') }}" alt="{{ conversation.bookAd.title }}" >
         </div>
         {{ form_start(form) }}
             <div class="bg-light my-2 d-flex p-3 justify-content-center send-message-box">
@@ -24,13 +24,10 @@
                 <button class="btn btn-primary btn-send-message">{{ button_label|default('Envoyer') }}</button>
             </div>
         {{ form_end(form) }}
-        <div data-newmessage-target="conversationId"  style="display: none;">{{ conversation.id }}</div>
-                    <div class="d-flex">
-                        <div class="col-6">
-                            <div class="card text-right p-2 m-1 message-left" style="display: none;" data-newmessage-target="messageContent"></div>
-                            <p class="px-3 text-detail" data-newmessage-target="messageDate"></p>
-                        </div>
-                    </div>
+        <div data-controller="newmessage">
+            <div data-newmessage-target="conversationId"  style="display: none;">{{ conversation.id }}</div>
+            <div data-newmessage-target="message"></div>
+        </div>
         {% for message in pagination %}
                 {% if message.user != app.user %}
                     <div class="d-flex">

@@ -17,7 +17,7 @@
                 {{ form(form) }}
             </div>
         {% endif %}
-        <img src="{{ asset('images/' ~ bookAd.imagePath) | imagine_filter('list_thumbnail') }}" alt="{{ bookAd.imagePath }}">
+        <img src="{{ asset('images/' ~ bookAd.imagePath) | imagine_filter('list_thumbnail') }}" alt="{{ bookAd.title }}">
     </div>
 </div>
 {% endblock %}

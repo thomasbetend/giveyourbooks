@@ -1,22 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ConversationController!{% endblock %}
+{% block title %}Conversations{% endblock %}
 
 {% block body %}
 
+<div class="navigation pagination pagination-sm d-flex justify-content-center mt-2">
+    {{ knp_pagination_render(pagination) }}
+</div>
 
 <div class="container w-75">
     <h1 class="mt-4">Conversations</h1>
     {% for conversation in pagination %}
-    <a href="{{ path('app_my_conversation', {id: conversation.id}) }}" class="text-white text-decoration-none">
-        <div class="card col-12 bg-light text-white p-3 mt-3">
-            <h6><span class="text-secondary">Annonce : {{ conversation.bookAd }}</span></h6>
+    <a href="{{ path('app_my_conversation', {id: conversation.id}) }}" class="text-white text-decoration-none conversation-box">
+        <div class="col-2"><img src="{{ asset('images/' ~ conversation.bookAd.imagePath) | imagine_filter('miniphotos') }}" alt="{{ conversation.bookAd.title }}"></div>
+        <div class="card col-9 text-white p-3 mt-3">
+            <h4 class="ml-4"><span class="text-secondary">Annonce : {{ conversation.bookAd }}</span></h4>
             {% for user in conversation.user %}
                 {% if user != app.user %}
-                    <div class="text-secondary" data-controller="conversationmessagenotif">
-                        <div data-conversationmessagenotif-target="notif" class=""></div>
+                    <div class="text-secondary d-flex" data-controller="conversationmessagenotif">
                         <div data-conversationmessagenotif-target="conversationId"  style="display: none;">{{ conversation.id }}</div>
-                        <i class="fa fa-envelope mx-3" aria-hidden="true"></i>{{ user.pseudo|capitalize }} à {{ user.city|capitalize }}
+                        <div><i class="fa fa-envelope mx-3" aria-hidden="true"></i>{{ user.pseudo|capitalize }} à {{ user.city|capitalize }}</div>
+                        <div data-conversationmessagenotif-target="notif" class="ml-4 notif-conversation"></div>
                     </div>
                 {% endif %}
             {% endfor %}

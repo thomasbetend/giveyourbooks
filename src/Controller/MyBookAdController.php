@@ -10,9 +10,11 @@ use App\Form\ConversationType;
 use App\Repository\BookAdRepository;
 use App\Repository\ConversationRepository;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -105,7 +107,7 @@ class MyBookAdController extends AbstractController
     public function show(
         BookAd $bookAd,
         ConversationRepository $conversationRepository,
-        Request $request
+        Request $request,
     ): Response
     {
         $userId = $this->getUser()->getId();
@@ -123,9 +125,6 @@ class MyBookAdController extends AbstractController
             $conversation->addUser($bookAd->getUser());
             $conversationRepository->save($conversation, true);
 
-            return $this->redirectToRoute('app_my_conversation', [
-                'id' => $conversation->getId(),
-            ]);        
         }
 
         return $this->render('my_book_ad/show.html.twig', [

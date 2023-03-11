@@ -66,15 +66,16 @@ class ConversationController extends AbstractController
             'seenByUserDestination' => false,
         ]);
 
-        foreach ($messagesSeenByUser as $message) {
-            $message->setSeenByUserDestination(true);
-            $messageRepository->save($message, true);
+        foreach ($messagesSeenByUser as $messageSeen) {
+            $messageSeen->setSeenByUserDestination(true);
+            $messageRepository->save($messageSeen, true);
         }
 
-        $form = $this->createForm(MessageType::class, $message);
+        $form = $this->createForm(MessageType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $message->setContent($form->getData()["contentNew"]);
             $message->setUser($this->getUser());
             $message->setUserDestination($userDestination);
             $message->setSeenByUserDestination(false);

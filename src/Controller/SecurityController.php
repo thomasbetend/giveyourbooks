@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Form\PasswordRequestType;
 use App\Form\ResetPasswordType;
 use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -133,5 +132,29 @@ class SecurityController extends AbstractController
         
         $this->addFlash('danger', 'Jeton invalide');
         return $this->redirectToRoute('app_login');
+    }
+
+    #[Route(path: 'validation-compte/{token}', name: 'validation_account')]
+    public function validateAccount(
+        string $token,
+        UserRepository $userRepository,
+        EntityManagerInterface $em
+    ): Response
+    {
+        $user = $userRepository->findOneBy(['validation_account_token' => $token]);
+
+        //dd($user);
+
+        if ($user) {
+            $user->setIsValid(true);
+            $user->setValidationAccountToken('');
+            $userRepository->save($user, true);
+
+            $this->addFlash('success', 'Votre compte est validé');
+            return new Response('Compte validé');
+        }
+
+        $this->addFlash('danger', 'Jeton invalide');
+        return new Response('Erreur');
     }
 }

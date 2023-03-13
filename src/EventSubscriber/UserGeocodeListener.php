@@ -11,18 +11,25 @@ use Doctrine\ORM\Events;
 #[AsEntityListener(event: Events::preUpdate, method: 'geocode', entity: User::class )]
 class UserGeocodeListener
 {
+
     public function __construct(private GovGeocoder $govGeocoder)
     {
     }
 
     public function geocode(User $user): void
     {
-        $coords = $this->govGeocoder->geocode($user->getAddress());
+        if ($user->geocoded) {
+            throw new \RuntimeException();
+        }
 
-        //dd($coords);
+        $coords = $this->govGeocoder->geocodeAddress($user->getAddress());
 
+        $user->geocoded = true;
         $user->setLatitude($coords['geometry']['coordinates'][1]);
         $user->setLongitude($coords['geometry']['coordinates'][0]);
         $user->setCity($coords['properties']['city']);
+
+        //dd($user);
+
     }
 }

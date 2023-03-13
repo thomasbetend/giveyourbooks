@@ -18,6 +18,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use TimestampableEntity;
 
+    public $geocoded = false;
+    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -69,6 +71,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'user_destination', targetEntity: Message::class)]
     private Collection $messages_user_destination;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $validation_account_token = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $isValid = null;
 
     public function __construct()
     {
@@ -369,6 +377,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $messagesUserDestination->setUserDestination(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getValidationAccountToken(): ?string
+    {
+        return $this->validation_account_token;
+    }
+
+    public function setValidationAccountToken(?string $validation_account_token): self
+    {
+        $this->validation_account_token = $validation_account_token;
+
+        return $this;
+    }
+
+    public function isIsValid(): ?bool
+    {
+        return $this->isValid;
+    }
+
+    public function setIsValid(?bool $isValid): self
+    {
+        $this->isValid = $isValid;
 
         return $this;
     }

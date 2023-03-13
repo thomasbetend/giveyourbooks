@@ -32,8 +32,6 @@ class HomeController extends AbstractController
                 $request->query->getInt('page', 1),
                 limit: 10
             );
-
-            //dd($pagination);
     
             return $this->render('home/aroundme.html.twig', [
                 'pagination' => $pagination,

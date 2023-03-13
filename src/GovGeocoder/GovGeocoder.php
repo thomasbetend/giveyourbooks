@@ -11,7 +11,7 @@ class GovGeocoder
         
     }
 
-    public function geocode(string $q): array
+    public function geocodeAddress(string $q): array
     {
         $response = $this->http->request(
             'GET',

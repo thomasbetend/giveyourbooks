@@ -14,3 +14,6 @@ rebuild: ## Rebuild the project
 	symfony console doctrine:database:create
 	symfony console doctrine:schema:update -f
 	symfony console doctrine:fixtures:load -n
+
+mailhog:
+	brew services run mailhog

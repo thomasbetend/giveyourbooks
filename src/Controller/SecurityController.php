@@ -78,6 +78,10 @@ class SecurityController extends AbstractController
                 ;
 
                 $mailer->send($mail);
+
+                return $this->render('security/email_reset_password_sent.html.twig', [
+                    'user' => $user,
+                ]);
             }
 
 

@@ -2,12 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Form\PasswordRequestType;
 use App\Form\ResetPasswordType;
+use App\Form\ResetPseudoType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
@@ -15,6 +18,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -99,7 +103,6 @@ class SecurityController extends AbstractController
         string $token,
         Request $request,
         UserRepository $userRepository,
-        EntityManagerInterface $em,
         UserPasswordHasherInterface $passwordHasher
     ): Response
     {
@@ -156,5 +159,101 @@ class SecurityController extends AbstractController
 
         $this->addFlash('danger', 'Jeton invalide');
         return new Response('app_register');
+    }
+
+    #[Route('/mesinfos', name: 'app_myinfos')]
+    public function showUserInfos(
+        #[CurrentUser] ?User $user
+    ): Response
+    {
+        return $this->render('user/infos.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
+    #[Route('/mesinfos/editer/{id}', name: 'app_myinfos_edit', methods: ['GET', 'POST'])]
+    public function editUserInfos(
+        BookAd $bookAd,
+        BookAdRepository $bookAdRepository,
+        Request $request,
+        #[CurrentUser] ?User $user
+    ): Response
+    {
+        $form = $this->createForm(BookAdType::class, $bookAd);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $bookAdRepository->save($bookAd, true);
+            
+            return $this->redirectToRoute('app_my_book_ad', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('my_book_ad/edit.html.twig', [
+            'book_ad' => $bookAd,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/mesinfos/change-password', name: 'app_change_password', methods: ['GET', 'POST'])]
+    public function changePassword(
+        #[CurrentUser] ?User $user,
+        UserPasswordHasherInterface $passwordHasher,
+        Request $request,
+        UserRepository $userRepository
+    ): Response
+    {
+        $form = $this->createForm(ResetPasswordType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $newPassword = $form->getData()["password"];
+            
+            $hashedPassword = $passwordHasher->hashPassword(
+                $user,
+                $newPassword,
+            );
+
+            $user->setPassword($hashedPassword);
+
+            $userRepository->save($user, true);
+
+            $this->addFlash('success', 'Mot de passe changé avec succès');
+            
+            return $this->redirectToRoute('app_myinfos');
+        }
+
+        return $this->render('user/change_password.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/mesinfos/change-pseudo', name: 'app_change_pseudo', methods: ['GET', 'POST'])]
+    public function changePseudo(
+        #[CurrentUser] ?User $user,
+        UserPasswordHasherInterface $passwordHasher,
+        Request $request,
+        UserRepository $userRepository
+    ): Response
+    {
+        $form = $this->createForm(ResetPseudoType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $newPseudo = $form->getData()["pseudo"];
+
+            $user->setPseudo($newPseudo);
+
+            $userRepository->save($user, true);
+
+            $this->addFlash('success', 'Pseudo changé avec succès');
+            
+            return $this->redirectToRoute('app_myinfos');
+        }
+
+        return $this->render('user/change_pseudo.html.twig', [
+            'form' => $form,
+        ]);
     }
 }

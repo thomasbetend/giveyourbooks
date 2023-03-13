@@ -19,7 +19,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     use TimestampableEntity;
 
     public $geocoded = false;
-    
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -76,7 +76,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $validation_account_token = null;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $isValid = null;
+    private ?bool $isVerified = null;
 
     public function __construct()
     {
@@ -393,14 +393,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isIsValid(): ?bool
+    public function isIsVerified(): ?bool
     {
-        return $this->isValid;
+        return $this->isVerified;
     }
 
-    public function setIsValid(?bool $isValid): self
+    public function setIsVerified(?bool $isVerified): self
     {
-        $this->isValid = $isValid;
+        $this->isVerified = $isVerified;
 
         return $this;
     }

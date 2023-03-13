@@ -4,26 +4,26 @@
 
 {% block body %}
 
-<h1 class="mt-4 text-center">Mes dons</h1>
-<div class="navigation d-flex justify-content-center">
-    {{ knp_pagination_render(pagination) }}
-</div>
-<div class="col-12 text-center mb-2">
-    <a class="btn btn-primary mt-3" href="{{ path('app_my_book_ad_new') }}">Je donne</a>
-</div>
-<a href="{{ path('app_home') }}" class="d-flex justify-content-center">Retour à l'accueil</a>
-<div class="container w-75 d-flex flex-row flex-wrap">
-    {% for bookAd in pagination %}
-        {% embed "./_parts/book_ad_card.html.twig" %}
-            {% block actions %}
-                {{ parent() }}
-                {% if is_granted('ROLE_USER') and app.user.id == bookAd.user.id %}
-                    <a href="{{ path('app_my_book_ad_delete', { slug: bookAd.slug }) }}" onclick="return confirm('Etes vous sûr ?')" class="btn btn-secondary">Supprimer</a>
-                    <a href="{{ path('app_my_book_ad_edit', { slug: bookAd.slug }) }}" class="btn  btn-success">Modifier</a>
-                {% endif %}
-            {% endblock %}
-        {% endembed %}
-    {% endfor %}
-</div>
+    <h1 class="mt-4 text-center">Mes dons</h1>
+    <div class="navigation d-flex justify-content-center">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+    <div class="col-12 text-center mb-2">
+        <a class="btn btn-primary mt-3" href="{{ path('app_my_book_ad_new') }}">Je donne</a>
+    </div>
+    <a href="{{ path('app_home') }}" class="d-flex justify-content-center">Retour à l'accueil</a>
+    <div class="container w-75 d-flex flex-row flex-wrap">
+        {% for bookAd in pagination %}
+            {% embed "./_parts/book_ad_card.html.twig" %}
+                {% block actions %}
+                    {{ parent() }}
+                    {% if is_granted('ROLE_USER') and app.user.id == bookAd.user.id %}
+                        <a href="{{ path('app_my_book_ad_delete', { slug: bookAd.slug }) }}" onclick="return confirm('Etes vous sûr ?')" class="btn btn-secondary">Supprimer</a>
+                        <a href="{{ path('app_my_book_ad_edit', { slug: bookAd.slug }) }}" class="btn  btn-success">Modifier</a>
+                    {% endif %}
+                {% endblock %}
+            {% endembed %}
+        {% endfor %}
+    </div>
 
 {% endblock %}

@@ -23,6 +23,7 @@ class UserFixtures extends Fixture
         $admin = new User();
         $admin->setPseudo('admin');
         $admin->setEmail('admin@giveyourbooks.com');
+        $admin->setIsVerified(true);
         $hashedPassword = $this->passwordHasher->hashPassword(
             $admin,
             'demo01',
@@ -37,6 +38,7 @@ class UserFixtures extends Fixture
         $thomas = new User();
         $thomas->setPseudo('thom');
         $thomas->setEmail('thomas@giveyourbooks.com');
+        $thomas->setIsVerified(true);
         $hashedPassword2 = $this->passwordHasher->hashPassword(
             $thomas,
             'demo01',
@@ -49,6 +51,7 @@ class UserFixtures extends Fixture
         $simone = new User();
         $simone->setPseudo('Sim');
         $simone->setEmail('simone@giveyourbooks.com');
+        $simone->setIsVerified(true);
         $hashedPassword3 = $this->passwordHasher->hashPassword(
             $simone,
             'demo01',
@@ -61,6 +64,7 @@ class UserFixtures extends Fixture
         $gina = new User();
         $gina->setPseudo('Gin');
         $gina->setEmail('gina@giveyourbooks.com');
+        $gina->setIsVerified(true);
         $hashedPassword4 = $this->passwordHasher->hashPassword(
             $gina,
             'demo01',

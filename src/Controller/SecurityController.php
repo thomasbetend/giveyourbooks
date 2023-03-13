@@ -146,15 +146,15 @@ class SecurityController extends AbstractController
         //dd($user);
 
         if ($user) {
-            $user->setIsValid(true);
+            $user->setIsVerified(true);
             $user->setValidationAccountToken('');
             $userRepository->save($user, true);
 
             $this->addFlash('success', 'Votre compte est validé');
-            return new Response('Compte validé');
+            return $this->redirectToRoute('app_home');
         }
 
         $this->addFlash('danger', 'Jeton invalide');
-        return new Response('Erreur');
+        return new Response('app_register');
     }
 }

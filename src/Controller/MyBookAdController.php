@@ -108,14 +108,15 @@ class MyBookAdController extends AbstractController
         BookAd $bookAd,
         ConversationRepository $conversationRepository,
         Request $request,
+        #[CurrentUser] ?User $user
     ): Response
     {
-        $userId = $this->getUser()->getId();
+        $userId = $user->getId();
         $bookAdId = $bookAd->getId();
 
         $conversation = new Conversation();
         $conversationExisting = $conversationRepository->getConversationByUserIdAndBookAd($userId, $bookAdId);
-
+        
         $form = $this->createForm(ConversationType::class, $conversation);
         $form->handleRequest($request);
 
@@ -125,6 +126,9 @@ class MyBookAdController extends AbstractController
             $conversation->addUser($bookAd->getUser());
             $conversationRepository->save($conversation, true);
 
+            return $this->redirectToRoute('app_my_conversation', [
+                'id' => $conversation->getId(),
+            ]);
         }
 
         return $this->render('my_book_ad/show.html.twig', [

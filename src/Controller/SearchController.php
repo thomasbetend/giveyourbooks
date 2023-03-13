@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Form\MySearchType;
 use App\Repository\BookAdRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -9,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 class SearchController extends AbstractController
 {
@@ -35,11 +37,11 @@ class SearchController extends AbstractController
         Request $request,
         BookAdRepository $bookAdRepository,
         PaginatorInterface $paginator,
+        #[CurrentUser] ?User $user
     ): Response
     {
-        $userId = $this->getUser()->getId();
-        $latitude = $this->getUser()->getLatitude();
-        $longitude = $this->getUser()->getLongitude();
+        $latitude = $user->getLatitude();
+        $longitude = $user->getLongitude();
 
         $form = $this->createForm(MySearchType::class,options: [
             'method' => 'GET',
@@ -54,7 +56,6 @@ class SearchController extends AbstractController
                 $latitude,
                 $longitude,
                 $search['q'] ?? '',
-                $userId
             ),
             $request->query->getInt('page', 1),
             limit: 10

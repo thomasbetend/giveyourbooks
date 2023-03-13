@@ -107,7 +107,6 @@ class BookAdRepository extends ServiceEntityRepository
         float $latitude,
         float $longitude,
         string $q,
-        int $userId,
     ): ORMQueryBuilder
     {
         {

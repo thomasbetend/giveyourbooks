@@ -27,9 +27,8 @@ export default class extends Controller {
                     this.messageTarget.prepend(div);
                     div.innerHTML = messageHtml;
 
-                    // console.log(newMessageContent, this.formatDateForMessage(newMessageDate));
             })
-        }, 3000);
+        }, 500);
     }
 
     formatDateForMessage(dateMessage) {

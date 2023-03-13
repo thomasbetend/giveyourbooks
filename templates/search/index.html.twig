@@ -21,7 +21,7 @@
             {% block actions %}
                 {{ parent() }}
                 {% if is_granted('ROLE_USER') and app.user.id != bookAd.user.id %}
-                    <a href="#" class="btn btn-primary">Je prends</a>
+                    <a href="{{ path('app_book_ad_show', { slug: bookAd.slug }) }}" class="btn btn-primary">Je prends</a>
                     {% if result.distance | number_format <= 1 %}
                         <span class="distance mx-4"><i class="fa-solid fa-location-dot"></i> Moins de 1 km</span>
                     {% else %}

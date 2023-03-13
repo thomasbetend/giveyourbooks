@@ -6,6 +6,17 @@ liip_imagine:
         generate: true
     filter_sets:
         original: ~
+        big_sizes:
+            filters:
+                thumbnail:
+                    size: [750, 750]
+                    mode: inset
+                    position: center
+                background:
+                    size: [750, 750]
+                    color: '#FFFFFF'
+                    position: center
+
         list_thumbnail:
             filters:
                 thumbnail:

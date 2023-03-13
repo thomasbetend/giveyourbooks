@@ -20,8 +20,10 @@
     </head>
     <body>
         {% include "./_parts/navbar.html.twig" %}
-        {% block body %}{% endblock %}
-        <div class="">
+        <div class="inter-page">
+            {% block body %}{% endblock %}
+        </div>
+        <div class="footer">
             {% include "./_parts/footer.html.twig" %}
         </div>
     </body>

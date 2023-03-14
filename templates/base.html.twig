@@ -20,6 +20,13 @@
     </head>
     <body>
         {% include "./_parts/navbar.html.twig" %}
+        {% for messages in app.flashes %}
+            <div class="alert alert-success">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        {% endfor %}
         <div class="inter-page">
             {% block body %}{% endblock %}
         </div>

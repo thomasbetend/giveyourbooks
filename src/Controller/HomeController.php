@@ -30,7 +30,7 @@ class HomeController extends AbstractController
             $pagination = $paginator->paginate(
                 $bookAdRepository->geocodeQueryBuilder($latitude, $longitude, $userId),
                 $request->query->getInt('page', 1),
-                limit: 10
+                limit: 9
             );
     
             return $this->render('home/aroundme.html.twig', [

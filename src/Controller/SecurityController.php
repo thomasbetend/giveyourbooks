@@ -70,7 +70,7 @@ class SecurityController extends AbstractController
 
                 //dd($url);
                 $mail = (new TemplatedEmail())
-                    ->from('expediteur@demo.test')
+                    ->from('reinitialisation@giveyourbooks.com')
                     ->to($user->getEmail())
                     ->subject('Réinitialisation de mot de passe')
                     ->htmlTemplate('mail/password_reset.html.twig')
@@ -124,7 +124,7 @@ class SecurityController extends AbstractController
 
                 $userRepository->save($user, true);
 
-                $this->addFlash('success', 'Mot de passe modifié');
+                $this->addFlash('success', 'Votre mot de passe a bien été modifié');
                 return $this->redirectToRoute('app_login');
             }
 

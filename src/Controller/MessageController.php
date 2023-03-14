@@ -31,6 +31,7 @@ class MessageController extends AbstractController
 
         return new JsonResponse([
             'areAllMessagesRead' => $areAllMessagesRead,
+            'totalMessages' => count($messagesNotRead),
         ]);
     }
 
@@ -52,8 +53,6 @@ class MessageController extends AbstractController
             'seenByUserDestination' => false,
         ]);
 
-        //dd($messagesNotRead);
-
         if ($messagesNotRead) {
             $arelMessagesInConversationRead = false;
         } else {
@@ -62,6 +61,7 @@ class MessageController extends AbstractController
 
         return new JsonResponse([
             'arelMessagesInConversationRead' => $arelMessagesInConversationRead,
+            'totalMessagesNotReadInConversation' => count($messagesNotRead),
         ]);
     }
 

@@ -28,7 +28,7 @@ export default class extends Controller {
                     div.innerHTML = messageHtml;
 
             })
-        }, 500);
+        }, 2000);
     }
 
     formatDateForMessage(dateMessage) {

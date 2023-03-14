@@ -18,20 +18,22 @@
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         {% endblock %}
     </head>
-    <body>
+    <body {{ stimulus_controller('symfony/ux-swup/swup') }}>
         {% include "./_parts/navbar.html.twig" %}
-        {% for messages in app.flashes %}
-            <div class="alert alert-success">
-                {% for message in messages %}
-                    {{ message }}
-                {% endfor %}
+        <main id="swup">
+            {% for messages in app.flashes %}
+                <div class="alert alert-success">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            <div class="inter-page">
+                {% block body %}{% endblock %}
             </div>
-        {% endfor %}
-        <div class="inter-page">
-            {% block body %}{% endblock %}
-        </div>
-        <div class="footer">
-            {% include "./_parts/footer.html.twig" %}
-        </div>
+            <div class="footer">
+                {% include "./_parts/footer.html.twig" %}
+            </div>
+        </main>
     </body>
 </html>

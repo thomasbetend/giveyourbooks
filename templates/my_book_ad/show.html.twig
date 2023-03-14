@@ -10,7 +10,7 @@
         <p class="text-detail">Donné par {{ bookAd.user.pseudo|capitalize }} à {{ bookAd.user.city|capitalize }}</p>
         {% if conversation|length > 0 %}
             <div>
-                <a href="{{ path('app_my_conversation', {id : conversation[0].id}) }}" class="btn btn-primary mb-3">Envoyer un message à {{ bookAd.user.pseudo|capitalize }}</a>
+                <a href="{{ path('app_my_conversation', {id : conversation[0].id}) }}" class="btn btn-primary mb-3">Envoyer un message</a>
             </div>
         {% else %}
             <div>

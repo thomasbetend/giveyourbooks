@@ -13,6 +13,10 @@
         <p>Pseudo : {{ user.pseudo|capitalize }}</p>
         <a href="{{ path('app_change_pseudo') }}" class="btn btn-default pb-4 mx-4">Modifier</a>
     </div>
+    <div class="d-flex align-items-center">
+        <p>Adresse : {{ user.address|capitalize }}</p>
+        <a href="{{ path('app_change_address') }}" class="btn btn-default pb-4 mx-4">Modifier</a>
+    </div>
     <p>Compte créé le {{ user.createdAt|date("d/m/Y") }}</p>
 </div>
 {% endif %}

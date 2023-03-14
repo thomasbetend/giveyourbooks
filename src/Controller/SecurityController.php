@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\PasswordRequestType;
+use App\Form\ResetAddressType;
 use App\Form\ResetPasswordType;
 use App\Form\ResetPseudoType;
 use App\Repository\UserRepository;
@@ -253,6 +254,35 @@ class SecurityController extends AbstractController
         }
 
         return $this->render('user/change_pseudo.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/mesinfos/change-address', name: 'app_change_address', methods: ['GET', 'POST'])]
+    public function changeAddress(
+        #[CurrentUser] ?User $user,
+        UserPasswordHasherInterface $passwordHasher,
+        Request $request,
+        UserRepository $userRepository
+    ): Response
+    {
+        $form = $this->createForm(ResetAddressType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $newAddress = $form->getData()["address"];
+
+            $user->setAddress($newAddress);
+
+            $userRepository->save($user, true);
+
+            $this->addFlash('success', 'Adresse changée avec succès');
+            
+            return $this->redirectToRoute('app_myinfos');
+        }
+
+        return $this->render('user/change_address.html.twig', [
             'form' => $form,
         ]);
     }

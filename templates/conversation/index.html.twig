@@ -18,7 +18,7 @@
             {% for user in conversation.user %}
                 {% if user != app.user %}
                     <div class="text-secondary d-flex" data-controller="conversationmessagenotif">
-                        <div data-conversationmessagenotif-target="conversationId"  style="display: none;">{{ conversation.id }}</div>
+                        <div data-conversationmessagenotif-target="conversationId" class="display-none">{{ conversation.id }}</div>
                         <div><i class="fa fa-envelope mx-3" aria-hidden="true"></i>{{ user.pseudo|capitalize }} à {{ user.city|capitalize }}</div>
                         <div data-conversationmessagenotif-target="notif" class="ml-4 notif-conversation"></div>
                     </div>

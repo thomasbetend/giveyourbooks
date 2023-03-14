@@ -13,8 +13,9 @@ export default class extends Controller {
                     console.log(data.arelMessagesInConversationRead);
                     if (data.arelMessagesInConversationRead === false) {
                         this.notifTarget.classList.add('red-notif-message');
+                        this.notifTarget.textContent = data.totalMessagesNotReadInConversation;
                     }
                 });
-        }, 500);
+        }, 2000);
     }
 }

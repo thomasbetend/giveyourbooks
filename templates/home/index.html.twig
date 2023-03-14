@@ -3,13 +3,12 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-
 <div class="container w-75 d-flex flex-row flex-wrap justify-content-center">
     <div class="d-flex flex-column align-items-center col-12">
         <h1 class="mt-4">Donnez vos livres !!!</h1>
         <h3 class="text-center text-secondary mt-1">Quelqu'un autour de vous a sûrement envie de les lire.</h3>
         <div>
-            <a class="btn btn-primary text-white mt-3" href="{{ path('app_login') }}">Je donne</a>
+            <a class="btn btn-primary text-white mt-1 mb-1 btn-home" href="{{ path('app_login') }}">Je donne</a>
         </div>
     </div>
     {% for bookAd in bookAds %}
@@ -23,5 +22,4 @@
         {% endembed %}    
     {% endfor %}
 </div>
-
 {% endblock %}

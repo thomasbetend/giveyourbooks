@@ -930,6 +930,11 @@
   "resolved" "https://registry.npmjs.org/@hotwired/stimulus/-/stimulus-3.2.1.tgz"
   "version" "3.2.1"
 
+"@hotwired/turbo@^7.0.1", "@hotwired/turbo@^7.1.0":
+  "integrity" "sha512-Dcu+NaSvHLT7EjrDrkEmH4qET2ZJZ5IcCWmNXxNQTBwlnE5tBZfN6WxZ842n5cHV52DH/AKNirbPBtcEXDLW4g=="
+  "resolved" "https://registry.npmjs.org/@hotwired/turbo/-/turbo-7.3.0.tgz"
+  "version" "7.3.0"
+
 "@jest/schemas@^29.4.3":
   "integrity" "sha512-VLYKXQmtmuEz6IxJsrZwzG9NvtkQsWNnWMsKxqWNu3+CnfzJQhp0WDDKWLVV9hLKr0l3SLLFRqcYHjhtyuDVxg=="
   "resolved" "https://registry.npmjs.org/@jest/schemas/-/schemas-29.4.3.tgz"
@@ -1085,6 +1090,10 @@
 "@symfony/ux-swup@file:vendor/symfony/ux-swup/assets":
   "resolved" "file:vendor/symfony/ux-swup/assets"
   "version" "1.1.0"
+
+"@symfony/ux-turbo@file:vendor/symfony/ux-turbo/assets":
+  "resolved" "file:vendor/symfony/ux-turbo/assets"
+  "version" "0.1.0"
 
 "@symfony/webpack-encore@^4.0.0":
   "integrity" "sha512-m0ZGm7vZpmc9pVKE7YBppS1tb9bK8r0qzOvRI2uCK7UfXtzfV3VgXr0VdTAlfmC72vvLKI+s9YJpiesOFbR6Aw=="
@@ -1820,6 +1829,11 @@
   dependencies:
     "color-name" "~1.1.4"
 
+"color-name@^1.1.4":
+  "integrity" "sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA=="
+  "resolved" "https://registry.npmjs.org/color-name/-/color-name-1.1.4.tgz"
+  "version" "1.1.4"
+
 "color-name@~1.1.4":
   "integrity" "sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA=="
   "resolved" "https://registry.npmjs.org/color-name/-/color-name-1.1.4.tgz"
@@ -2002,6 +2016,11 @@
   "integrity" "sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg=="
   "resolved" "https://registry.npmjs.org/cssesc/-/cssesc-3.0.0.tgz"
   "version" "3.0.0"
+
+"cssfontparser@^1.2.1":
+  "integrity" "sha512-6tun4LoZnj7VN6YeegOVb67KBX/7JJsqvj+pv3ZA7F878/eN33AbGa5b/S/wXxS/tcp8nc40xRUrsPlxIyNUPg=="
+  "resolved" "https://registry.npmjs.org/cssfontparser/-/cssfontparser-1.2.1.tgz"
+  "version" "1.2.1"
 
 "cssnano-preset-default@^5.2.14":
   "integrity" "sha512-t0SFesj/ZV2OTylqQVOrFgEh5uanxbO6ZAdeCrNsUQ6fVuXwYTxJPNAGvGTxHbD68ldIJNec7PyYZDBrfDQ+6A=="
@@ -2793,6 +2812,14 @@
   "resolved" "https://registry.npmjs.org/isobject/-/isobject-3.0.1.tgz"
   "version" "3.0.1"
 
+"jest-canvas-mock@^2.3.0":
+  "integrity" "sha512-mmMpZzpmLzn5vepIaHk5HoH3Ka4WykbSoLuG/EKoJd0x0ID/t+INo1l8ByfcUJuDM+RIsL4QDg/gDnBbrj2/IQ=="
+  "resolved" "https://registry.npmjs.org/jest-canvas-mock/-/jest-canvas-mock-2.4.0.tgz"
+  "version" "2.4.0"
+  dependencies:
+    "cssfontparser" "^1.2.1"
+    "moo-color" "^1.0.2"
+
 "jest-util@^29.4.3":
   "integrity" "sha512-ToSGORAz4SSSoqxDSylWX8JzkOQR7zoBtNRsA7e+1WUX5F8jrOwaNpuh1YfJHJKDHXLHmObv5eOjejUd+/Ws+Q=="
   "resolved" "https://registry.npmjs.org/jest-util/-/jest-util-29.4.3.tgz"
@@ -3029,6 +3056,13 @@
   "version" "3.1.2"
   dependencies:
     "brace-expansion" "^1.1.7"
+
+"moo-color@^1.0.2":
+  "integrity" "sha512-i/+ZKXMDf6aqYtBhuOcej71YSlbjT3wCO/4H1j8rPvxDJEifdwgg5MaFyu6iYAT8GBZJg2z0dkgK4YMzvURALQ=="
+  "resolved" "https://registry.npmjs.org/moo-color/-/moo-color-1.0.3.tgz"
+  "version" "1.0.3"
+  dependencies:
+    "color-name" "^1.1.4"
 
 "ms@2.0.0":
   "integrity" "sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A=="

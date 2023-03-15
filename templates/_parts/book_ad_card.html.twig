@@ -5,7 +5,7 @@
             <h5 class="card-title text-secondary">{{ bookAd.title|u.truncate(10, ' ...', false)|capitalize }}</h5>
             <p class="card-text small-text px-2">{{ bookAd.category }}</p>
         </div>
-        <p class="card-text text-detail">{{ bookAd.description|u.truncate(20, ' ...', false) }}</p>
+        <p class="card-text text-detail">{{ bookAd.description|u.truncate(20, ' ...', false)|capitalize }}</p>
         <p class="card-text text-primary"><small>{{ bookAd.user|capitalize }} à {{bookAd.user.city}}</small></p>
         
         {% block actions %}

@@ -15,7 +15,6 @@ export default class extends Controller {
                     let newMessageContent = newMessage[0];
                     let newMessageDate = newMessage[1].date;
 
-
                     let messageHtml = "<div class='d-flex'>\
                                             <div class='col-6'>\
                                                 <div class='card text-right p-2 m-1 message-left'>" + newMessageContent + "</div>\

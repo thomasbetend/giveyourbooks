@@ -31,6 +31,7 @@
         "symfony/http-client": "6.2.*",
         "symfony/intl": "6.2.*",
         "symfony/mailer": "6.2.*",
+        "symfony/mercure-bundle": "^0.3.6",
         "symfony/mime": "6.2.*",
         "symfony/monolog-bundle": "^3.0",
         "symfony/notifier": "6.2.*",
@@ -44,6 +45,7 @@
         "symfony/translation": "6.2.*",
         "symfony/twig-bundle": "6.2.*",
         "symfony/ux-swup": "^2.7",
+        "symfony/ux-turbo": "^2.7",
         "symfony/validator": "6.2.*",
         "symfony/web-link": "6.2.*",
         "symfony/webpack-encore-bundle": "^1.16",
@@ -100,7 +102,8 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "6.2.*"
+            "require": "6.2.*",
+            "docker": true
         }
     },
     "require-dev": {

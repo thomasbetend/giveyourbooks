@@ -10,7 +10,19 @@ import { Controller } from '@hotwired/stimulus';
  * Delete this file or adapt it for your use!
  */
 export default class extends Controller {
+
+    static targets = [
+        'input', 'result'
+    ];
+
     connect() {
-        this.element.textContent = 'Hello Stimulus! Edit me in assets/controllers/hello_controller.js';
+        console.log('youhou');
+
+        const eventSource = new EventSource("{{ mercure('https://giveyourboox.com/message')|escape('js') }}");
+        eventSource.onmessage = event => {
+            // Will be called every time an update is published by the server
+            console.log(JSON.parse(event.data));
+        }
     }
+
 }

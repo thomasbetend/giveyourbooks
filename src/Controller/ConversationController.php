@@ -12,8 +12,11 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mercure\HubInterface;
+use Symfony\Component\Mercure\Update;
 use Symfony\Component\Messenger\MessageBus;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ConversationController extends AbstractController
@@ -45,24 +48,26 @@ class ConversationController extends AbstractController
         Conversation $conversation,
         MessageRepository $messageRepository,
         PaginatorInterface $paginator,
-        Request $request
+        Request $request,
+        HubInterface $hub,
+        #[CurrentUser] ?User $user
     ): Response
     {
-        if (!in_array($this->getUser(), $conversation->getUser()->toArray())) {
+        if (!in_array($user, $conversation->getUser()->toArray())) {
             return $this->redirectToRoute('app_home');
         }
 
         $message = new Message();
 
-        foreach ($conversation->getUser() as $user) {
-            if ($user != $this->getUser()) {
-                $userDestination = $user;
+        foreach ($conversation->getUser() as $userConv) {
+            if ($userConv != $user) {
+                $userDestination = $userConv;
             }
         }
 
         $messagesSeenByUser = $messageRepository->findBy([
             'user' => $userDestination,
-            'user_destination' => $this->getUser(),
+            'user_destination' => $user,
             'seenByUserDestination' => false,
         ]);
 
@@ -76,12 +81,26 @@ class ConversationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $message->setContent($form->getData()["contentNew"]);
-            $message->setUser($this->getUser());
+            $message->setUser($user);
             $message->setUserDestination($userDestination);
             $message->setSeenByUserDestination(false);
             $message->setConversation($conversation);
 
             $messageRepository->save($message, true);
+
+            $update = new Update(
+                'https://giveyourboox.com/message',
+                json_encode([
+                    'content' => 'message',
+                    'userId' => $user->getId(),
+                    'conversationId' => $conversation->getId(),
+                    'userDestinationId' => $userDestination->getId(),
+                ])
+            );
+    
+            $hub->publish($update);
+    
+            dd($hub);
             
             return $this->redirectToRoute('app_my_conversation', [
                 'id' => $conversation->getId(),
@@ -91,7 +110,7 @@ class ConversationController extends AbstractController
         $pagination = $paginator->paginate(
             $messageRepository->getMessageByConversationIdQueryBuilder($conversation->getId()),
             $request->query->getInt('page', 1),
-            limit: 10
+            limit: 20
         );
 
         return $this->render('conversation/show.html.twig', [

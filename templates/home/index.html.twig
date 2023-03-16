@@ -11,6 +11,9 @@
             <a class="btn btn-primary text-white mt-1 mb-1 btn-home" href="{{ path('app_login') }}">Je donne</a>
         </div>
     </div>
+    <form action="{{ path('app_ping') }}">
+        <button class="btn btn-primary" type="submit">Ping</button>
+    </form>
     {% for bookAd in bookAds %}
         {% embed "./_parts/book_ad_card.html.twig" %}
             {% block actions %}
@@ -22,4 +25,16 @@
         {% endembed %}    
     {% endfor %}
 </div>
+<div data-controller="hello">
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        const eventSource = new EventSource("{{ mercure('https://giveyourboox.com/message')|escape('js') }}");
+        eventSource.onmessage = event => {
+            // Will be called every time an update is published by the server
+            console.log(JSON.parse(event.data));
+        }
+    </script>
 {% endblock %}

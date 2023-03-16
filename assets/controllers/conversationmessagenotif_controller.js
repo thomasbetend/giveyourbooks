@@ -16,6 +16,6 @@ export default class extends Controller {
                         this.notifTarget.textContent = data.totalMessagesNotReadInConversation;
                     }
                 });
-        }, 2000);
+        }, 10000);
     }
 }

@@ -19,6 +19,6 @@ export default class extends Controller {
                         this.notifTarget.style.display = 'none';
                     }
                 });
-        }, 2000);
+        }, 10000);
     }
 }

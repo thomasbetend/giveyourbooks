@@ -26,7 +26,7 @@
         {{ form_end(form) }}
         <div data-controller="newmessage">
             <div data-newmessage-target="conversationId"  style="display: none;">{{ conversation.id }}</div>
-            <div data-newmessage-target="message"></div>
+            <div data-newmessage-target="message" id="new-message"></div>
         </div>
         {% for message in pagination %}
                 {% if message.user != app.user %}

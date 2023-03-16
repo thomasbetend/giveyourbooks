@@ -20,8 +20,9 @@
                 {% if app.user and is_granted('ROLE_USER') %}
                 
                 <a href="{{ path('app_my_conversations')}}" class="link-message-navbar">
-                    <li class="nav-item text-white d-flex" data-controller="navbarmessagenotif">
+                    <li class="nav-item text-white d-flex" data-controller="navbarmessagenotif" data-navbarmessagenotif-mercure-value="{{ mercure('https://giveyourboox.com/message') }}">
                         <i class="fa-solid fa-comments"></i>
+                        <div data-navbarmessagenotif-target="userId"  style="display: none;">{{ app.user.id }}</div>
                         <div data-navbarmessagenotif-target="notif" class="notif-message-navbar"></div>
                     </li>
                 </a>

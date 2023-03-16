@@ -25,10 +25,12 @@
         {% endembed %}    
     {% endfor %}
 </div>
-<div data-controller="hello">
+<div data-controller="hello" data-hello-mercure-value="{{ mercure('https://giveyourboox.com/message') }}">
+    <div data-hello-target="text">
+    </div>
 </div>
 {% endblock %}
-{% block javascripts %}
+{# {% block javascripts %}
     {{ parent() }}
     <script>
         const eventSource = new EventSource("{{ mercure('https://giveyourboox.com/message')|escape('js') }}");
@@ -37,4 +39,4 @@
             console.log(JSON.parse(event.data));
         }
     </script>
-{% endblock %}
+{% endblock %} #}

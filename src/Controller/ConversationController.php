@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\Mercure\Update;
-use Symfony\Component\Messenger\MessageBus;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -26,10 +25,12 @@ class ConversationController extends AbstractController
     public function myConversations(
         ConversationRepository $conversationRepository,
         PaginatorInterface $paginator,
-        Request $request
+        Request $request,
+        #[CurrentUser] ?User $user
     ): Response
     {
-        $userId = $this->getUser()->getId();
+        $userId = $user->getId();
+        
 
         $pagination = $paginator->paginate(
             $conversationRepository->getUserConversationQueryBuilder($userId),
@@ -76,6 +77,11 @@ class ConversationController extends AbstractController
             $messageRepository->save($messageSeen, true);
         }
 
+        $messagesNotRead = $messageRepository->findBy([
+            'user_destination' => $user,
+            'seenByUserDestination' => false,
+        ]);
+
         $form = $this->createForm(MessageType::class);
         $form->handleRequest($request);
 
@@ -99,13 +105,24 @@ class ConversationController extends AbstractController
             );
     
             $hub->publish($update);
-    
-            dd($hub);
-            
+                
             return $this->redirectToRoute('app_my_conversation', [
                 'id' => $conversation->getId(),
             ]);
         }
+
+        $update = new Update(
+            'https://giveyourboox.com/message',
+            json_encode([
+                'content' => 'conversation',
+                'conversationId' => $conversation->getId(),
+                'userId' => $user->getId(),
+                'userDestinationId' => $userDestination->getId(),
+                'totalMessagesNotRead' => count($messagesNotRead),
+            ])
+        );
+
+        $hub->publish($update);
 
         $pagination = $paginator->paginate(
             $messageRepository->getMessageByConversationIdQueryBuilder($conversation->getId()),

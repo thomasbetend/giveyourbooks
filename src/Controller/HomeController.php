@@ -48,19 +48,4 @@ class HomeController extends AbstractController
         }
     }
 
-    #[Route('/ping', name: 'app_ping')]
-    public function publish(HubInterface $hub): Response
-    {
-        $update = new Update(
-            'https://giveyourboox.com/message',
-            json_encode(['content' => 'message'])
-        );
-
-        $hub->publish($update);
-
-        dd($hub);
-
-        return new Response('published!');
-    }
-
 }

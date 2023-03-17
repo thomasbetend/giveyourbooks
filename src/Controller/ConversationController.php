@@ -69,6 +69,7 @@ class ConversationController extends AbstractController
         $messagesSeenByUser = $messageRepository->findBy([
             'user' => $userDestination,
             'user_destination' => $user,
+            'conversation' => $conversation,
             'seenByUserDestination' => false,
         ]);
 
@@ -76,11 +77,6 @@ class ConversationController extends AbstractController
             $messageSeen->setSeenByUserDestination(true);
             $messageRepository->save($messageSeen, true);
         }
-
-        $messagesNotRead = $messageRepository->findBy([
-            'user_destination' => $user,
-            'seenByUserDestination' => false,
-        ]);
 
         $form = $this->createForm(MessageType::class);
         $form->handleRequest($request);
@@ -94,8 +90,9 @@ class ConversationController extends AbstractController
 
             $messageRepository->save($message, true);
 
+
             $update = new Update(
-                'https://giveyourboox.com/message',
+                '/conversation/new-message/' . $conversation->getId(),
                 json_encode([
                     'content' => 'message',
                     'userId' => $user->getId(),
@@ -105,24 +102,29 @@ class ConversationController extends AbstractController
             );
     
             $hub->publish($update);
+
+            $update2 = new Update(
+                '/conversation/update-total-messages/',
+                json_encode([
+                    'content' => 'totalAfterMessageSent'
+                ])
+            );
+    
+            $hub->publish($update2);
                 
             return $this->redirectToRoute('app_my_conversation', [
                 'id' => $conversation->getId(),
             ]);
         }
 
-        $update = new Update(
-            'https://giveyourboox.com/message',
+        $update3 = new Update(
+            '/conversation/update-total-messages/',
             json_encode([
-                'content' => 'conversation',
-                'conversationId' => $conversation->getId(),
-                'userId' => $user->getId(),
-                'userDestinationId' => $userDestination->getId(),
-                'totalMessagesNotRead' => count($messagesNotRead),
+                'content' => 'totalAfterConversationRefresh'
             ])
         );
 
-        $hub->publish($update);
+        $hub->publish($update3);
 
         $pagination = $paginator->paginate(
             $messageRepository->getMessageByConversationIdQueryBuilder($conversation->getId()),

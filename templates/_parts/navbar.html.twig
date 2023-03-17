@@ -3,7 +3,7 @@
     {{ encore_entry_script_tags('app') }}
 {% endblock %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-secondary d-flex justify-content-between px-4">
-    <a class="navbar-brand nav-bar-title" href="{{ path('app_home') }}">GiveYourBooks</a>
+    <a class="navbar-brand nav-bar-title" href="{{ path('app_home') }}">GiveBoox</a>
         {% if app.user and is_granted('ROLE_USER') %}
             {{ render(controller(
                 'App\\Controller\\SearchController::searchBar',
@@ -20,7 +20,7 @@
                 {% if app.user and is_granted('ROLE_USER') %}
                 
                 <a href="{{ path('app_my_conversations')}}" class="link-message-navbar">
-                    <li class="nav-item text-white d-flex" data-controller="navbarmessagenotif" data-navbarmessagenotif-mercure-value="{{ mercure('https://giveyourboox.com/message') }}">
+                    <li class="nav-item text-white d-flex" data-controller="navbarmessagenotif" data-navbarmessagenotif-mercure-value="{{ mercure('/conversation/update-total-messages/') }}">
                         <i class="fa-solid fa-comments"></i>
                         <div data-navbarmessagenotif-target="userId"  style="display: none;">{{ app.user.id }}</div>
                         <div data-navbarmessagenotif-target="notif" class="notif-message-navbar"></div>

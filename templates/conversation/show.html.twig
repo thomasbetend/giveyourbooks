@@ -24,7 +24,7 @@
                 <button class="btn btn-primary btn-send-message">{{ button_label|default('Envoyer') }}</button>
             </div>
         {{ form_end(form) }}
-        <div data-controller="newmessage" data-newmessage-mercure-value="{{ mercure('https://giveyourboox.com/message') }}">
+        <div data-controller="newmessage" data-newmessage-mercure-value="{{ mercure('/conversation/new-message/' ~ conversation.id) }}">
             <div data-newmessage-target="conversationId"  style="display: none;">{{ conversation.id }}</div>
             <div data-newmessage-target="message"></div>
         </div>

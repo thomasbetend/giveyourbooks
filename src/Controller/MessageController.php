@@ -85,28 +85,18 @@ class MessageController extends AbstractController
 
         $newMessages = $messageRepository->findBy([
             'conversation' => $conversation,
-            'user_destination' => $this->getUSer(),
+            'user_destination' => $user,
             'seenByUserDestination' => false,
         ]);
 
-        if ($newMessages) {
-            $newMessagesToDisplay = true;
-        } else {
-            $newMessagesToDisplay = false;
-        }
 
         $newMessagesToPass = [];
 
         foreach ($newMessages as $newMessage) {
             $newMessagesToPass[] = [$newMessage->getContent(), $newMessage->getCreatedAt()];
-            $newMessage->setSeenByUserDestination(true);
-            $messageRepository->save($newMessage, true);
         }
 
-        //dd($newMessagesToPass);
-
         return new JsonResponse([
-            'newMessagesToDisplay' => $newMessagesToDisplay,
             'newMessagesToPass' => $newMessagesToPass,
         ]);
     }

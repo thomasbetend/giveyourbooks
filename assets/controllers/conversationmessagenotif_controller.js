@@ -16,11 +16,9 @@ export default class extends Controller {
 
             const result = JSON.parse(event.data);
 
-            console.log('conversation notif', result, result.conversationId, this.conversationIdTarget.textContent);
+            console.log('conversation notif', result);
 
-            if (result.conversationId == this.conversationIdTarget.textContent) {
-                this.fetchMessagesInConversation(result.conversationId);
-            }
+            this.fetchMessagesInConversation(result.conversationId);
         }
     }
 
@@ -28,7 +26,6 @@ export default class extends Controller {
         fetch('/messages_in_conversation_read/' + conversationId)
         .then((response) => response.json())
         .then((data) => {
-            console.log(data.arelMessagesInConversationRead);
             if (data.arelMessagesInConversationRead === false) {
                 this.notifTarget.classList.add('red-notif-message');
                 this.notifTarget.textContent = data.totalMessagesNotReadInConversation;

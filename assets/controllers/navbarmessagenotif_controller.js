@@ -16,16 +16,9 @@ export default class extends Controller {
 
             const result = JSON.parse(event.data);
 
-            console.log('navbar notif', result.content, result.userId, result.userDestinationId, this.userIdTarget.textContent);
+            console.log('navbar notif', result);
 
-            if (result.userDestinationId == this.userIdTarget.textContent) {
-                this.fetchAllMessages();
-            }
-
-            if (result.content == 'conversation' && result.userId == this.userIdTarget.textContent) {
-                this.fetchAllMessages();
-                console.log('coucou navbar');
-            }
+            this.fetchAllMessages();
         }
     }
 
